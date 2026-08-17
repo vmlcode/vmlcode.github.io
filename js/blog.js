@@ -5,11 +5,12 @@ import {
 
 const $ = (sel) => document.querySelector(sel);
 
+// Percentages of the hero box — see renderStars in common.js.
 const STARS = [
-  { x: 120, y: 40, dur: 3.4, accent: true },
-  { x: 640, y: 58, size: 3, dur: 4, delay: 1.2, accent: true },
-  { x: 400, y: 28, dur: 4.8, delay: 0.6 },
-  { x: 880, y: 96, dur: 4.4, delay: 1.8 }
+  { x: 10, y: 12, dur: 3.4, accent: true },
+  { x: 54, y: 17, size: 3, dur: 4, delay: 1.2, accent: true },
+  { x: 34, y: 8, dur: 4.8, delay: 0.6 },
+  { x: 75, y: 30, dur: 4.4, delay: 1.8 }
 ];
 
 initTheme($('#theme-toggle'));

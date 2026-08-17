@@ -101,13 +101,17 @@ export function renderFooterLinks(el, links) {
   ).join('');
 }
 
-/** Decorative twinkling starfield; positions are authored per page. */
+/**
+ * Decorative twinkling starfield. Positions are percentages of the hero box,
+ * not pixels — at a fixed px offset most of the field lands outside a phone
+ * viewport and the hero renders bare on exactly the devices most people use.
+ */
 export function renderStars(el, stars) {
   if (!el) return;
   el.innerHTML = stars.map((s) => {
     const size = s.size || 2;
     const style = [
-      `left:${s.x}px`, `top:${s.y}px`,
+      `left:${s.x}%`, `top:${s.y}%`,
       `width:${size}px`, `height:${size}px`,
       `animation-duration:${s.dur}s`,
       s.delay ? `animation-delay:${s.delay}s` : ''

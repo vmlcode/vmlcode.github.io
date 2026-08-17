@@ -7,14 +7,15 @@ import {
 const $ = (sel) => document.querySelector(sel);
 
 // Decorative, not editorial — kept in code rather than content.
+// x/y are percentages of the hero box so the field survives narrow viewports.
 const STARS = [
-  { x: 140, y: 56, size: 3, dur: 3, accent: true },
-  { x: 320, y: 30, dur: 4.2, delay: 0.8 },
-  { x: 780, y: 48, size: 3, dur: 3.6, delay: 1.4, accent: true },
-  { x: 930, y: 130, dur: 5, delay: 0.4 },
-  { x: 580, y: 24, dur: 4.6, delay: 2 },
-  { x: 870, y: 230, size: 3, dur: 3.2, delay: 1, accent: true },
-  { x: 440, y: 160, dur: 3.8, delay: 1.7 }
+  { x: 12, y: 14, size: 3, dur: 3, accent: true },
+  { x: 27, y: 8, dur: 4.2, delay: 0.8 },
+  { x: 66, y: 12, size: 3, dur: 3.6, delay: 1.4, accent: true },
+  { x: 79, y: 33, dur: 5, delay: 0.4 },
+  { x: 49, y: 6, dur: 4.6, delay: 2 },
+  { x: 74, y: 58, size: 3, dur: 3.2, delay: 1, accent: true },
+  { x: 37, y: 40, dur: 3.8, delay: 1.7 }
 ];
 
 initTheme($('#theme-toggle'));

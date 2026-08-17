@@ -57,16 +57,28 @@
 /* ── base ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+html {
+  /* iOS inflates text on rotation into landscape without this. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh; /* accounts for mobile browser chrome */
   background: var(--vm-bg);
   color: var(--vm-fg);
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.55;
   transition: background .5s ease, color .5s ease;
+  overflow-wrap: break-word; /* a long token must never widen the page */
 }
+
+/* Custom controls are styled entirely by us; the grey iOS flash on tap reads
+   as a rendering glitch against this palette. Focus styles remain intact. */
+button, a { -webkit-tap-highlight-color: transparent; }
 
 a { color: var(--vm-acc-txt); text-decoration: none; }
 a:hover { color: var(--vm-acc); }
@@ -205,7 +217,7 @@ figure { margin: 0; }
 .vm-star--acc { background: var(--vm-acc); }
 .vm-shoot {
   position: absolute;
-  left: 620px; top: 36px;
+  left: 52%; top: 9%;
   width: 52px; height: 1px;
   background: linear-gradient(90deg, transparent, var(--vm-acc));
   animation: vm-shoot 12s linear 3s infinite;
@@ -636,7 +648,16 @@ figure { margin: 0; }
 .vm-art-next-list a:hover { color: var(--vm-acc-txt); }
 
 /* — article body — */
-.vm-art-body { font-size: 16px; line-height: 1.8; color: var(--vm-fg); }
+.vm-art-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--vm-fg);
+  /* Grid items default to min-width:auto, i.e. a min-content floor. The console
+     blocks are white-space:pre, so that floor is as wide as their longest line
+     and the column would stretch past the viewport instead of letting the block
+     scroll inside itself. */
+  min-width: 0;
+}
 .vm-art-body p { margin: 0 0 20px; text-align: justify; hyphens: auto; }
 .vm-art-body strong { font-weight: 600; }
 .vm-art-body a { text-decoration: underline; text-underline-offset: 3px; }
@@ -725,7 +746,7 @@ figure { margin: 0; }
    breakpoints are what make it survive as a real, shipped page.
    ══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1000px) {
-  .vm-record-grid { grid-template-columns: 1fr; gap: 28px; }
+  .vm-record-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .vm-posts { grid-template-columns: 1fr 1fr; }
   .vm-instrument-grid { gap: 32px; }
 
@@ -744,49 +765,116 @@ figure { margin: 0; }
 }
 
 @media (max-width: 860px) {
-  .vm-nav { flex-wrap: wrap; gap: 12px 20px; padding: 12px 24px; }
-  .vm-prompt { font-size: 11.5px; white-space: normal; margin-right: 0; width: 100%; }
-  .vm-nav-links { gap: 16px; font-size: 13px; margin-right: auto; flex-wrap: wrap; }
+  /* One inset for every full-width container, widened on notched phones in
+     landscape so text never sits under the rounded corner or camera cutout. */
+  .vm-nav, .vm-hero, .vm-section, .vm-blog-hero, .vm-blog-body,
+  .vm-art-hero, .vm-art-grid, .vm-footer, .vm-noscript, .vm-error {
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
 
-  .vm-hero { padding: 56px 24px 48px; }
+  /* The nav previously wrapped to three rows on a phone — prompt, then links
+     over two lines, then the toggle — eating ~140px of sticky header. The
+     links now scroll horizontally on one line instead. */
+  .vm-nav { flex-wrap: wrap; gap: 10px 16px; padding-top: 10px; padding-bottom: 10px; }
+  .vm-prompt { font-size: 11.5px; white-space: nowrap; margin-right: 0; width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .vm-nav-links {
+    flex: 1;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 18px;
+    font-size: 13px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .vm-nav-links::-webkit-scrollbar { display: none; }
+  .vm-nav-links a {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .vm-theme-btn { min-height: 40px; flex: none; }
+
+  .vm-hero { padding-top: 40px; padding-bottom: 44px; }
   .vm-hero-title { font-size: 40px; }
   .vm-caret--lg { height: 32px; }
   .vm-log { font-size: 11px; }
 
-  .vm-section { padding: 40px 24px; }
-  .vm-expedition { grid-template-columns: 1fr; gap: 20px; }
+  .vm-section { padding-top: 40px; padding-bottom: 40px; }
+  /* Sections must clear the taller wrapped nav when jumped to. */
+  .vm-section, .vm-footer { scroll-margin-top: 104px; }
+  .vm-expedition { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .vm-plate-wrap { max-width: 340px; }
   .vm-instrument-grid { grid-template-columns: 1fr; }
   .vm-posts { grid-template-columns: 1fr; gap: 24px; }
 
-  .vm-row { grid-template-columns: 1fr; gap: 6px; }
+  .vm-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .vm-row-blurb { display: block; margin-left: 0; margin-top: 4px; }
   .vm-record { padding: 28px 20px 32px; }
   .vm-prose, .vm-record-p { text-align: left; }
 
-  .vm-blog-hero { padding: 56px 24px 40px; }
+  .vm-blog-hero { padding-top: 44px; padding-bottom: 36px; }
   .vm-blog-title { font-size: 36px; }
-  .vm-blog-body { padding: 28px 24px 48px; }
+  .vm-blog-body { padding-top: 28px; padding-bottom: 48px; }
   .vm-entry-title { font-size: 23px; }
-  .vm-noscript, .vm-error { padding-inline: 24px; }
+  .vm-entry:hover { padding-left: 0; } /* hover-shift is meaningless on touch */
+  .vm-noscript, .vm-error { padding-top: var(--space-4); padding-bottom: var(--space-4); }
 
-  .vm-art-hero { padding: 48px 24px 32px; }
+  /* Filter chips are the primary control on the blog — size them for thumbs. */
+  .vm-filters { gap: 10px; margin-top: 22px; }
+  .vm-filter { padding: 9px 15px; min-height: 40px; font-size: 12px; }
+
+  .vm-art-hero { padding-top: 36px; padding-bottom: 28px; }
   .vm-art-title { font-size: 34px; }
   .vm-art-teaser { font-size: 18px; }
-  .vm-art-grid { grid-template-columns: 1fr; gap: 28px; padding: 32px 24px; }
+  .vm-art-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 28px; padding-bottom: 32px; }
+
+  /* The contents list becomes a scrollable strip: as a stacked column it cost
+     ~150px above the article, pushing the first paragraph off the screen. */
   .vm-art-toc {
     position: static;
     border-bottom: 1px solid var(--vm-line);
-    padding-bottom: 20px;
+    padding-bottom: 12px;
   }
+  .vm-toc-links {
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .vm-toc-links::-webkit-scrollbar { display: none; }
+  .vm-toc-links a { white-space: nowrap; display: inline-flex; align-items: center; min-height: 38px; }
   .vm-art-side-note { display: none; }
+
   .vm-art-body { font-size: 15.5px; }
   .vm-art-body p { text-align: left; }
+  .vm-art-head { margin-top: 30px; scroll-margin-top: 96px; }
   .vm-art-head h2 { font-size: 24px; }
-  .vm-pull { font-size: 19px; }
+  .vm-pull { font-size: 19px; margin: 24px 0; }
   .vm-art-plate { height: 200px; }
+  .vm-drop::first-letter { font-size: 52px; padding-right: 10px; }
+  .vm-console { padding: 14px 16px; font-size: 11.5px; }
+  .vm-art-share a, .vm-copy { min-height: 38px; display: inline-flex; align-items: center; }
 
-  .vm-footer { padding: 24px; }
+  .vm-footer { padding-top: 24px; padding-bottom: 24px; }
+}
+
+/* Phones proper. */
+@media (max-width: 600px) {
+  .vm-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .vm-footer-links { gap: 22px; }
+  .vm-footer-links a, .vm-eyebrow--blog a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .vm-row { padding-right: 0; }
+  .vm-row:hover { padding-left: 0; } /* no hover state on touch; keeps rows aligned */
+  .vm-cert:hover { padding-left: 0; }
+  .vm-plate-wrap:hover .vm-plate { transform: none; }
 }
 
 @media (max-width: 480px) {
@@ -797,6 +885,30 @@ figure { margin: 0; }
   .vm-row-name { font-size: 22px; }
   .vm-blog-title { font-size: 30px; }
   .vm-entry-title { font-size: 21px; }
+  .vm-art-title { font-size: 28px; }
+  .vm-art-teaser { font-size: 16px; }
+  .vm-drop::first-letter { font-size: 44px; padding-right: 9px; }
+
+  .vm-plate, .vm-art-plate, .vm-record-plate { height: 160px; }
+  .vm-record { padding: 24px 16px 28px; }
+  .vm-record-close { top: 12px; right: 12px; }
+  .vm-lesson { margin-top: 20px; }
+
+  /* Skill rows: the meter drops under a long label rather than crushing it. */
+  .vm-skill { grid-template-columns: 1fr; gap: 6px; }
+  .vm-skill-name { font-size: 17px; }
+  .vm-tick { width: 22px; }
+
+  .vm-cert-name { font-size: 17px; }
+  .vm-hero-sub, .vm-lede { max-width: none; }
+}
+
+/* Landscape phones: vertical space is the scarce resource, not width. */
+@media (max-height: 480px) and (orientation: landscape) {
+  .vm-hero { padding-top: 28px; padding-bottom: 28px; }
+  .vm-hero-title { font-size: 34px; }
+  .vm-art-hero, .vm-blog-hero { padding-top: 28px; padding-bottom: 24px; }
+  .vm-art-toc, .vm-art-aside { position: static; }
 }
 
 /* Respect the reader's motion preference — this page is unusually animated. */
