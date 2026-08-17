@@ -1,6 +1,6 @@
 # Portfolio — Victor Maldonado
 
-Static personal site ("El Observatorio") plus its blog, *The Night Shift*.
+Static personal site plus its blog, *The Night Shift*.
 No framework and no build step: content lives in JSON, pages are ES modules.
 
 Live at **https://vmlcode.github.io**

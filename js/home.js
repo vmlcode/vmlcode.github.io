@@ -1,4 +1,4 @@
-/* Home page — "El Observatorio". All copy comes from /content/*.json. */
+/* Home page. All copy comes from /content/*.json. */
 import {
   esc, loadContent, contentError, initTheme, typer, initReveal,
   renderFooterLinks, renderStars, plateHTML

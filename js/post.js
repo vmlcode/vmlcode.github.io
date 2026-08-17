@@ -50,7 +50,7 @@ async function renderPost(post, posts) {
   const related = post.related
     ? `<div class="vm-art-related">This entry is about ` +
       `<a href="${esc(post.related.href)}">${esc(post.related.label)}</a> — ` +
-      `the full project record lives in the catalogue at El Observatorio.</div>`
+      `the full project record lives in the catalogue on the main page.</div>`
     : '';
 
   $('#art-body').innerHTML = `${html}<div class="vm-tags vm-art-tags">${tags}</div>${related}`;
