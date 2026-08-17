@@ -1,0 +1,84 @@
+/* Shared styling for the social-card sources. Rendered at exactly 1200×630 by
+   og/build.sh — do not change these dimensions without updating the meta tags. */
+* { box-sizing: border-box; margin: 0; }
+html, body { background: #0e0f11; }
+
+.card {
+  position: relative;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: #191a1d;
+  color: #f2f2f3;
+  font-family: "Lora", Georgia, serif;
+  padding: 78px 88px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 6px solid #e1ad66;
+}
+
+.stars { position: absolute; inset: 0; }
+.star {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(242, 242, 243, .45);
+}
+.star.acc { background: #e1ad66; }
+
+.acc { color: #e1ad66; }
+.acc-soft { color: #facb8d; }
+
+.prompt {
+  font: 21px ui-monospace, Menlo, monospace;
+  color: rgba(242, 242, 243, .6);
+  position: relative;
+}
+.caret {
+  display: inline-block;
+  width: 10px; height: 20px;
+  background: #e1ad66;
+  margin: 0 3px 0 2px;
+  vertical-align: -3px;
+}
+
+.title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: 92px;
+  line-height: 1.08;
+  letter-spacing: -.015em;
+  margin-top: 46px;
+  position: relative;
+}
+.title em { font-style: italic; color: #e1ad66; }
+
+.sub {
+  font-size: 25px;
+  line-height: 1.5;
+  color: rgba(242, 242, 243, .6);
+  max-width: 760px;
+  margin-top: 26px;
+  position: relative;
+}
+
+.tags { display: flex; gap: 12px; margin-top: 34px; position: relative; }
+.tag {
+  font: 19px ui-monospace, Menlo, monospace;
+  color: #facb8d;
+  border: 1px solid #e1ad66;
+  border-radius: 4px;
+  padding: 6px 18px;
+}
+
+.foot {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+}
+.url {
+  font: 21px ui-monospace, Menlo, monospace;
+  color: rgba(242, 242, 243, .45);
+}
