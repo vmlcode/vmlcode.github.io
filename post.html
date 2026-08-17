@@ -38,11 +38,10 @@
 <div class="vm-sticky">
   <header class="vm-nav vm-nav--flush">
     <div class="vm-prompt">
-      victor@vmlcode:~$
-      <span id="prompt-cmd" class="vm-cmd">cat</span><span class="vm-caret" aria-hidden="true"></span>
+      <span class="vm-prompt-head">victor@vmlcode:~$ </span><span id="prompt-cmd" class="vm-cmd">cat</span><span class="vm-caret" aria-hidden="true"></span>
     </div>
     <a class="vm-back" href="./blog.html">← The Night Shift</a>
-    <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme">☾ night shift</button>
+    <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
   </header>
   <div class="vm-progress" role="presentation"><div id="progress-bar" class="vm-progress-bar"></div></div>
 </div>
@@ -70,7 +69,12 @@
 <div class="vm-art-grid">
 
   <aside class="vm-art-toc">
-    <div class="vm-art-side-key">contents</div>
+    <!-- A plain label on desktop (pointer-events disabled there); the collapse
+         control only becomes interactive at phone width. -->
+    <button id="toc-toggle" class="vm-art-side-key vm-toc-toggle" type="button"
+            aria-expanded="true" aria-controls="toc">
+      <span>contents</span><span class="vm-toc-icon" aria-hidden="true">−</span>
+    </button>
     <nav id="toc" class="vm-toc-links" aria-label="Table of contents"></nav>
     <div class="vm-art-side-note">written between<br>training runs<br>san cristóbal</div>
   </aside>

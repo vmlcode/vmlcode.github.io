@@ -42,7 +42,11 @@ export function initTheme(btn) {
 
   const paint = () => {
     const dark = root.getAttribute('data-vm-theme') !== 'light';
-    btn.textContent = dark ? '☾ night shift' : '☀ day shift';
+    // Icon and words are separate elements so the label can be dropped at phone
+    // width, where the design calls for an icon-only control.
+    btn.innerHTML =
+      `<span class="vm-theme-icon">${dark ? '☾' : '☀'}</span>` +
+      `<span class="vm-theme-label">${dark ? 'night shift' : 'day shift'}</span>`;
     btn.setAttribute('aria-pressed', String(!dark));
   };
 

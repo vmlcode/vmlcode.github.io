@@ -33,8 +33,37 @@ try {
 
   initReveal();
   initNavSpy();
+  initNavToggle();
 } catch (err) {
   contentError('main', err);
+}
+
+// ── collapsed nav (phone only) ───────────────────────────────────────────
+// The button is display:none above the breakpoint, so this is inert on desktop.
+function initNavToggle() {
+  const btn = $('#nav-toggle');
+  const nav = $('#site-nav');
+  const links = $('#nav-links');
+  if (!btn || !nav) return;
+
+  const setOpen = (open) => {
+    nav.classList.toggle('is-nav-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    btn.textContent = open ? '✕' : '☰';
+  };
+
+  btn.addEventListener('click', () => setOpen(!nav.classList.contains('is-nav-open')));
+  // Tapping a destination should dismiss the menu, not leave it covering the page.
+  links.addEventListener('click', (ev) => {
+    if (ev.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && nav.classList.contains('is-nav-open')) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
 }
 
 // ── shell ────────────────────────────────────────────────────────────────

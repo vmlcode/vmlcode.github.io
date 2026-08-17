@@ -22,6 +22,7 @@ try {
     await renderPost(post, posts);
     initProgress();
     initTocSpy();
+    initTocToggle();
   }
 } catch (err) {
   contentError('#art-body', err);
@@ -115,6 +116,30 @@ function initProgress() {
   window.addEventListener('scroll', paint, { passive: true });
   window.addEventListener('resize', paint, { passive: true });
   paint();
+}
+
+// ── toc collapse (phone only) ────────────────────────────────────────────
+// CSS gives the button pointer-events:none above the breakpoint, so the
+// contents list is permanently expanded on desktop and this never fires.
+function initTocToggle() {
+  const btn = $('#toc-toggle');
+  const toc = $('#toc');
+  if (!btn || !toc) return;
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open));
+    toc.classList.toggle('is-collapsed', !open);
+    btn.querySelector('.vm-toc-icon').textContent = open ? '−' : '+';
+  });
+
+  // Jumping to a section should close the list on a phone so the heading lands
+  // at the top of the viewport rather than under an open menu.
+  toc.addEventListener('click', (ev) => {
+    if (ev.target.closest('a') && window.matchMedia('(max-width: 860px)').matches) {
+      btn.click();
+    }
+  });
 }
 
 // ── toc highlight ────────────────────────────────────────────────────────

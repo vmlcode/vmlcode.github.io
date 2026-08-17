@@ -199,6 +199,23 @@ figure { margin: 0; }
 }
 .vm-theme-btn:hover { background: var(--vm-hover); }
 
+/* Collapsed-nav control: phone only. Hidden here so desktop is untouched. */
+.vm-nav-toggle {
+  display: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--vm-fg-60);
+  background: transparent;
+  border: 1px solid var(--vm-line);
+  border-radius: var(--radius-md);
+}
+.vm-nav-toggle:hover { color: var(--vm-fg); }
+
 /* ── hero ─────────────────────────────────────────────────────────────── */
 .vm-hero {
   position: relative;
@@ -608,6 +625,20 @@ figure { margin: 0; }
   color: var(--vm-acc-txt);
   margin-bottom: 10px;
 }
+/* The contents label is a <button> so it can collapse the list on a phone.
+   These resets make it render exactly as the plain label it replaced, and
+   pointer-events:none keeps it inert at desktop width. */
+.vm-toc-toggle {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: default;
+  pointer-events: none;
+}
+.vm-toc-icon { display: none; }
 .vm-toc-links {
   display: flex;
   flex-direction: column;
@@ -765,142 +796,302 @@ figure { margin: 0; }
 }
 
 @media (max-width: 860px) {
-  /* One inset for every full-width container, widened on notched phones in
-     landscape so text never sits under the rounded corner or camera cutout. */
+  /* ══ MOBILE LAYOUT — implements "Portfolio Mobile.dc.html" ══════════════
+     One column, collapsed nav, full-bleed plates, flush-left copy, and every
+     control sized for a thumb. Confined to this breakpoint so the desktop
+     layout above is untouched. Frame reference: 390 × 844.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* Design insets the phone frame at 20px; widen on notched devices. */
   .vm-nav, .vm-hero, .vm-section, .vm-blog-hero, .vm-blog-body,
-  .vm-art-hero, .vm-art-grid, .vm-footer, .vm-noscript, .vm-error {
-    padding-left: max(24px, env(safe-area-inset-left));
-    padding-right: max(24px, env(safe-area-inset-right));
+  .vm-art-hero, .vm-art-toc, .vm-art-body, .vm-art-aside,
+  .vm-footer, .vm-noscript, .vm-error {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
   }
 
-  /* The nav previously wrapped to three rows on a phone — prompt, then links
-     over two lines, then the toggle — eating ~140px of sticky header. The
-     links now scroll horizontally on one line instead. */
-  .vm-nav { flex-wrap: wrap; gap: 10px 16px; padding-top: 10px; padding-bottom: 10px; }
-  .vm-prompt { font-size: 11.5px; white-space: nowrap; margin-right: 0; width: 100%; overflow: hidden; text-overflow: ellipsis; }
-  .vm-nav-links {
-    flex: 1;
-    min-width: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 18px;
-    font-size: 13px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .vm-nav-links::-webkit-scrollbar { display: none; }
-  .vm-nav-links a {
+  /* ── collapsed nav ─────────────────────────────────────────────────── */
+  .vm-nav { flex-wrap: wrap; gap: 12px; padding-top: 11px; padding-bottom: 11px; }
+  .vm-prompt {
+    font-size: 11.5px;
+    margin-right: auto;
     white-space: nowrap;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .vm-prompt-tail { display: none; }  /* phone shows victor@host only */
+
+  .vm-theme-btn { font-size: 11px; padding: 7px 10px; min-height: 44px; flex: none; }
+  .vm-theme-label { display: none; }  /* icon-only control */
+  .vm-nav-toggle { display: inline-flex; flex: none; }
+
+  /* Menu panel drops below the bar, full-bleed to the frame edges. */
+  .vm-nav-links {
+    display: none;
+    order: 3;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    font-size: 15px;
+    margin-inline: calc(-1 * max(20px, env(safe-area-inset-left)));
+    border-top: 1px solid var(--vm-line);
+  }
+  .is-nav-open .vm-nav-links { display: flex; animation: vm-open .35s ease both; }
+  .vm-nav-links a {
+    display: block;
+    padding: 14px max(20px, env(safe-area-inset-left));
+    border-bottom: 1px solid var(--vm-line);
+    color: var(--vm-fg);
+  }
+  .vm-nav-links a:last-child { border-bottom: 0; }
+  .vm-nav-links a:hover, .vm-nav-links a.is-current { color: var(--vm-acc-txt); }
+
+  /* Back-link leads the bar on the blog and article pages. */
+  .vm-back {
+    order: -1;
+    margin-right: auto;
+    font-size: 11.5px;
+    font-family: var(--font-mono);
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
+    min-height: 44px;
   }
-  .vm-theme-btn { min-height: 40px; flex: none; }
+  .vm-back + .vm-prompt, .vm-prompt:has(+ .vm-back) { margin-right: 0; }
+  .vm-prompt-head { display: none; }
 
-  .vm-hero { padding-top: 40px; padding-bottom: 44px; }
-  .vm-hero-title { font-size: 40px; }
-  .vm-caret--lg { height: 32px; }
-  .vm-log { font-size: 11px; }
+  /* ── hero ──────────────────────────────────────────────────────────── */
+  .vm-hero { padding-top: 38px; padding-bottom: 32px; }
+  .vm-log { font-size: 10.5px; gap: 4px; margin-bottom: 22px; }
+  .vm-hero-title { font-size: 36px; line-height: 1.14; letter-spacing: -.01em; }
+  .vm-caret--lg { width: 3px; height: 28px; margin-left: 6px; }
+  .vm-hero-sub { margin-top: 14px; font-size: 14.5px; line-height: 1.65; max-width: none; }
+  .vm-fig { margin-top: 24px; }
+  .vm-caption { font-size: 10px; margin-top: 6px; }
 
-  .vm-section { padding-top: 40px; padding-bottom: 40px; }
-  /* Sections must clear the taller wrapped nav when jumped to. */
-  .vm-section, .vm-footer { scroll-margin-top: 104px; }
-  .vm-expedition { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .vm-plate-wrap { max-width: 340px; }
-  .vm-instrument-grid { grid-template-columns: 1fr; }
-  .vm-posts { grid-template-columns: 1fr; gap: 24px; }
+  /* ── sections ──────────────────────────────────────────────────────── */
+  .vm-section { padding-top: 32px; padding-bottom: 32px; scroll-margin-top: 68px; }
+  .vm-footer { scroll-margin-top: 68px; }
+  .vm-eyebrow { font-size: 10.5px; margin-bottom: 0; }
+  .vm-eyebrow svg { display: none; }  /* design drops the section glyphs */
+  .vm-lede { font-size: 12.5px; margin-top: 6px; margin-bottom: 22px; max-width: none; }
+  .vm-comment { font-size: 10.5px; margin-bottom: 14px; }
 
-  .vm-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-  .vm-row-blurb { display: block; margin-left: 0; margin-top: 4px; }
-  .vm-record { padding: 28px 20px 32px; }
-  .vm-prose, .vm-record-p { text-align: left; }
+  /* ── experience ────────────────────────────────────────────────────── */
+  .vm-timeline { gap: 34px; }
+  .vm-expedition { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .vm-plate-wrap { max-width: none; }
+  .vm-plate { height: 132px; border-width: 5px; }
+  .vm-plate-wrap .vm-caption { margin-bottom: 14px; }
+  .vm-commit { padding-left: 16px; }
+  .vm-node { display: none; }
+  .vm-commit-meta { font-size: 11px; gap: 8px; }
+  .vm-commit-title { font-size: 23px; line-height: 1.25; margin-top: 7px; }
+  .vm-prose { font-size: 13.5px; line-height: 1.7; margin-top: 9px; text-align: left; max-width: none; }
+  .vm-tags { gap: 7px; margin-top: 13px; }
 
-  .vm-blog-hero { padding-top: 44px; padding-bottom: 36px; }
-  .vm-blog-title { font-size: 36px; }
-  .vm-blog-body { padding-top: 28px; padding-bottom: 48px; }
-  .vm-entry-title { font-size: 23px; }
-  .vm-entry:hover { padding-left: 0; } /* hover-shift is meaningless on touch */
-  .vm-noscript, .vm-error { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+  /* ── catalogue ─────────────────────────────────────────────────────── */
+  .vm-row { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 16px 0; }
+  .vm-row:hover { padding-left: 0; background: transparent; }
+  .vm-row-id { font-size: 11px; }
+  .vm-row-name { font-size: 24px; }
+  .vm-row-blurb { display: block; margin-left: 0; margin-top: 3px; font-size: 12.5px; }
+  .vm-row-cta { margin-top: 10px; font-size: 11.5px; }
+  .vm-row-cta > span + span { display: none; }  /* keep the verb, drop live/github */
 
-  /* Filter chips are the primary control on the blog — size them for thumbs. */
-  .vm-filters { gap: 10px; margin-top: 22px; }
-  .vm-filter { padding: 9px 15px; min-height: 40px; font-size: 12px; }
+  .vm-record {
+    margin-inline: calc(-1 * max(20px, env(safe-area-inset-left)));
+    padding: 22px max(20px, env(safe-area-inset-left)) 26px;
+  }
+  .vm-record-close { top: 10px; right: 14px; }
+  .vm-record-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .vm-record-plate { height: 150px; border-width: 5px; }
+  .vm-record-kicker { font-size: 10.5px; margin-top: 20px; }
+  .vm-record-title { font-size: 27px; margin-top: 6px; }
+  .vm-record-rule { margin: 14px 0 0; width: 38px; }
+  .vm-record-p { font-size: 13.5px; line-height: 1.75; text-align: left; margin-top: 11px; }
+  .vm-record-p:first-of-type { margin-top: 14px; }
+  .vm-specs { margin-top: 20px; }
+  .vm-spec-key { font-size: 10.5px; }
+  .vm-lesson { margin-top: 22px; padding-left: 16px; }
+  .vm-lesson-txt { font-size: 17.5px; }
+  /* Full-width stacked actions — side-by-side pills are too small to hit. */
+  .vm-record-actions { flex-direction: column; gap: 10px; margin-top: 22px; }
+  .vm-link-btn { justify-content: center; min-height: 46px; padding: 0 15px; }
 
-  .vm-art-hero { padding-top: 36px; padding-bottom: 28px; }
-  .vm-art-title { font-size: 34px; }
-  .vm-art-teaser { font-size: 18px; }
-  .vm-art-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 28px; padding-bottom: 32px; }
+  /* ── instrumentation ───────────────────────────────────────────────── */
+  .vm-instrument-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .vm-skills { gap: 12px; }
+  .vm-skill-name { font-size: 17px; }
+  .vm-tick { width: 14px; }
+  .vm-cert-name { font-size: 16.5px; line-height: 1.3; }
+  .vm-cert:hover { padding-left: 0; }
 
-  /* The contents list becomes a scrollable strip: as a stacked column it cost
-     ~150px above the article, pushing the first paragraph off the screen. */
+  /* ── blog teaser ───────────────────────────────────────────────────── */
+  .vm-posts { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .vm-post { padding: 18px 0; border-top: 1px solid var(--vm-line); }
+  .vm-post:last-child { border-bottom: 1px solid var(--vm-line); }
+  .vm-post-meta { font-size: 11px; gap: 10px; }
+  .vm-post-title { font-size: 21px; line-height: 1.28; margin-top: 6px; }
+  .vm-post-blurb { font-size: 12.5px; margin-top: 5px; }
+
+  /* ── footer ────────────────────────────────────────────────────────── */
+  .vm-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding-top: 26px;
+    padding-bottom: 40px;
+  }
+  .vm-footer-log { font-size: 11px; }
+  .vm-footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .vm-footer-links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--vm-line);
+    border-radius: var(--radius-md);
+  }
+
+  /* ── blog index ────────────────────────────────────────────────────── */
+  .vm-blog-hero { padding-top: 40px; padding-bottom: 30px; }
+  .vm-blog-kicker { font-size: 10.5px; margin-bottom: 12px; }
+  .vm-blog-title { font-size: 38px; letter-spacing: -.01em; }
+  .vm-blog-sub { font-size: 13.5px; line-height: 1.65; margin-top: 11px; max-width: none; }
+  .vm-filters { gap: 8px; margin-top: 22px; }
+  .vm-filter { padding: 9px 14px; min-height: 40px; font-size: 11.5px; }
+
+  .vm-blog-body { padding-top: 8px; padding-bottom: 34px; }
+  .vm-entry { padding: 20px 0; }
+  .vm-entry:hover { padding-left: 0; }
+  .vm-entry-meta { font-size: 11px; gap: 10px; }
+  .vm-entry-title { font-size: 24px; line-height: 1.28; margin-top: 7px; }
+  .vm-entry-teaser { font-size: 13px; line-height: 1.6; margin-top: 6px; max-width: none; }
+  .vm-blog-outro { font-size: 11px; margin-top: 22px; }
+  /* The return link becomes a full-width target under the list. */
+  .vm-blog-outro #blog-outro-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    margin-top: 14px;
+    border: 1px solid var(--vm-line);
+    border-radius: var(--radius-md);
+    color: var(--vm-fg-60);
+  }
+
+  /* ── article ───────────────────────────────────────────────────────── */
+  .vm-art-hero { padding-top: 36px; padding-bottom: 26px; }
+  .vm-art-meta { font-size: 11px; gap: 10px; }
+  .vm-art-title { font-size: 34px; line-height: 1.16; margin-top: 12px; }
+  .vm-art-teaser { font-size: 17px; line-height: 1.45; margin-top: 12px; }
+  .vm-art-hero .vm-record-rule { width: 38px; margin: 20px 0 0; }
+
+  .vm-art-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0; }
+
+  /* Contents collapses to an accordion instead of a stacked column. */
   .vm-art-toc {
     position: static;
+    padding-top: 14px;
     border-bottom: 1px solid var(--vm-line);
-    padding-bottom: 12px;
   }
-  .vm-toc-links {
-    flex-direction: row;
-    gap: 20px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+  .vm-toc-toggle {
+    pointer-events: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    margin-bottom: 0;
   }
-  .vm-toc-links::-webkit-scrollbar { display: none; }
-  .vm-toc-links a { white-space: nowrap; display: inline-flex; align-items: center; min-height: 38px; }
+  .vm-toc-icon { display: inline; color: var(--vm-fg-45); letter-spacing: 0; }
+  .vm-toc-links { flex-direction: column; gap: 0; padding-bottom: 10px; overflow: visible; }
+  .vm-toc-links.is-collapsed { display: none; }
+  .vm-toc-links a {
+    display: block;
+    min-height: 0;
+    padding: 9px 0;
+    border-top: 1px solid var(--vm-line);
+    color: var(--vm-fg-60);
+    white-space: normal;
+  }
   .vm-art-side-note { display: none; }
 
-  .vm-art-body { font-size: 15.5px; }
-  .vm-art-body p { text-align: left; }
-  .vm-art-head { margin-top: 30px; scroll-margin-top: 96px; }
-  .vm-art-head h2 { font-size: 24px; }
-  .vm-pull { font-size: 19px; margin: 24px 0; }
-  .vm-art-plate { height: 200px; }
-  .vm-drop::first-letter { font-size: 52px; padding-right: 10px; }
-  .vm-console { padding: 14px 16px; font-size: 11.5px; }
-  .vm-art-share a, .vm-copy { min-height: 38px; display: inline-flex; align-items: center; }
+  .vm-art-body { padding-top: 28px; padding-bottom: 8px; font-size: 15.5px; line-height: 1.78; }
+  .vm-art-body p { text-align: left; margin-bottom: 18px; }
+  .vm-drop::first-letter { font-size: 52px; line-height: .8; padding: 5px 10px 0 0; }
+  .vm-art-head { margin: 30px 0 14px; scroll-margin-top: 84px; }
+  .vm-art-head h2 { font-size: 25px; line-height: 1.25; }
+  .vm-art-fig { margin: 26px 0; }
+  .vm-art-plate { height: 200px; border-width: 5px; }
+  .vm-pull { font-size: 20px; line-height: 1.45; margin: 26px 0; padding-left: 16px; }
+  .vm-console { padding: 14px 16px; margin: 22px 0; font-size: 11.5px; }
+  .vm-art-tags { margin-top: 30px; }
+  .vm-art-related { margin-top: 22px; padding-top: 18px; font-size: 13px; line-height: 1.65; }
 
-  .vm-footer { padding-top: 24px; padding-bottom: 24px; }
-}
-
-/* Phones proper. */
-@media (max-width: 600px) {
-  .vm-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .vm-footer-links { gap: 22px; }
-  .vm-footer-links a, .vm-eyebrow--blog a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
+  /* Share and next-entries become tappable blocks. */
+  .vm-art-aside {
+    position: static;
+    grid-column: auto;
+    flex-direction: column;
+    gap: 26px;
+    border-top: 0;
+    padding-top: 26px;
   }
-  .vm-row { padding-right: 0; }
-  .vm-row:hover { padding-left: 0; } /* no hover state on touch; keeps rows aligned */
-  .vm-cert:hover { padding-left: 0; }
-  .vm-plate-wrap:hover .vm-plate { transform: none; }
+  .vm-art-share {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    font-size: 11.5px;
+  }
+  .vm-art-share a, .vm-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid var(--vm-line);
+    border-radius: var(--radius-md);
+    color: var(--vm-fg-60);
+  }
+  .vm-art-next { border-top: 0; padding-top: 0; }
+  .vm-art-next-list { gap: 0; }
+  .vm-art-next-list a {
+    font-size: 19px;
+    padding: 14px 0;
+    border-top: 1px solid var(--vm-line);
+  }
+  .vm-art-next-list a:last-child { border-bottom: 1px solid var(--vm-line); }
 }
 
-@media (max-width: 480px) {
-  .vm-hero-title { font-size: 32px; }
-  .vm-caret--lg { height: 26px; }
-  .vm-commit-title { font-size: 23px; }
-  .vm-record-title { font-size: 27px; }
+/* Touch tidy-ups that apply below the mobile layout breakpoint too. */
+@media (max-width: 600px) {
+  .vm-eyebrow--blog a { display: inline-flex; align-items: center; min-height: 40px; }
+  .vm-row { padding-right: 0; }
+  .vm-plate-wrap:hover .vm-plate { transform: none; } /* hover fires on tap */
+}
+
+/* Narrow phones only (iPhone SE class). Deliberately below the 390px reference
+   frame so none of these override the mobile design's own values. */
+@media (max-width: 380px) {
+  .vm-hero-title { font-size: 31px; }
+  .vm-caret--lg { height: 25px; }
+  .vm-blog-title { font-size: 32px; }
+  .vm-art-title { font-size: 29px; }
+  .vm-record-title { font-size: 24px; }
   .vm-row-name { font-size: 22px; }
-  .vm-blog-title { font-size: 30px; }
   .vm-entry-title { font-size: 21px; }
-  .vm-art-title { font-size: 28px; }
-  .vm-art-teaser { font-size: 16px; }
-  .vm-drop::first-letter { font-size: 44px; padding-right: 9px; }
+  .vm-art-head h2 { font-size: 22px; }
+  .vm-drop::first-letter { font-size: 46px; }
 
-  .vm-plate, .vm-art-plate, .vm-record-plate { height: 160px; }
-  .vm-record { padding: 24px 16px 28px; }
-  .vm-record-close { top: 12px; right: 12px; }
-  .vm-lesson { margin-top: 20px; }
-
-  /* Skill rows: the meter drops under a long label rather than crushing it. */
-  .vm-skill { grid-template-columns: 1fr; gap: 6px; }
-  .vm-skill-name { font-size: 17px; }
-  .vm-tick { width: 22px; }
-
-  .vm-cert-name { font-size: 17px; }
-  .vm-hero-sub, .vm-lede { max-width: none; }
+  /* Meter drops below the label rather than crushing a long skill name. */
+  .vm-skill { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .vm-art-share { grid-template-columns: 1fr 1fr; }
+  .vm-footer-links { grid-template-columns: 1fr; }
 }
 
 /* Landscape phones: vertical space is the scarce resource, not width. */

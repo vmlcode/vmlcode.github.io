@@ -43,13 +43,13 @@
 </head>
 <body>
 
-<header class="vm-nav">
+<header id="site-nav" class="vm-nav">
   <div class="vm-prompt">
-    <span id="prompt-user">victor</span>@<span id="night-word" class="vm-prompt-word">vmlcode</span><span class="vm-caret" aria-hidden="true"></span>:~$
-    <span id="prompt-cmd" class="vm-cmd">./init.sh</span>
+    <span id="prompt-user">victor</span>@<span id="night-word" class="vm-prompt-word">vmlcode</span><span class="vm-caret" aria-hidden="true"></span><span class="vm-prompt-tail">:~$ <span id="prompt-cmd" class="vm-cmd">./init.sh</span></span>
   </div>
   <nav id="nav-links" class="vm-nav-links" aria-label="Sections"></nav>
-  <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme">☾ night shift</button>
+  <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
+  <button id="nav-toggle" class="vm-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
 </header>
 
 <noscript>
