@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-vm-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Night Shift — Victor Maldonado</title>
+<meta name="description" content="An entry from The Night Shift — notes on machine learning, edge AI, NLP and teaching by Victor Maldonado.">
+<meta name="author" content="Victor Maldonado">
+<meta name="theme-color" content="#191a1d">
+
+<!-- Per-post preview tags cannot be set here: which post this is comes from the
+     ?p= query string, and scrapers do not run JS. Every entry therefore shares
+     the blog card. See README for the fix if that ever matters. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Victor Maldonado">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="The Night Shift — Victor Maldonado">
+<meta property="og:description" content="Everything I learn, written down while the models train. Some findings replicate.">
+<meta property="og:image" content="https://vmlcode.github.io/og/blog.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://vmlcode.github.io/og/blog.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="./styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
+<script>
+  try {
+    var t = localStorage.getItem('vm-theme');
+    if (t) document.documentElement.setAttribute('data-vm-theme', t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<div class="vm-sticky">
+  <header class="vm-nav vm-nav--flush">
+    <div class="vm-prompt">
+      victor@observatorio:~$
+      <span id="prompt-cmd" class="vm-cmd">cat</span><span class="vm-caret" aria-hidden="true"></span>
+    </div>
+    <a class="vm-back" href="./blog.html">← The Night Shift</a>
+    <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme">☾ night shift</button>
+  </header>
+  <div class="vm-progress" role="presentation"><div id="progress-bar" class="vm-progress-bar"></div></div>
+</div>
+
+<noscript>
+  <p class="vm-noscript">This page loads its content from Markdown, so JavaScript is required. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
+</noscript>
+
+<main>
+
+<section class="vm-art-hero">
+  <div class="vm-stars" aria-hidden="true">
+    <span class="vm-star vm-star--acc" style="left:140px;top:40px;animation-duration:3.4s"></span>
+    <span class="vm-star vm-star--acc" style="left:700px;top:56px;width:3px;height:3px;animation-duration:4s;animation-delay:1.2s"></span>
+    <span class="vm-star" style="left:430px;top:26px;animation-duration:4.8s;animation-delay:.6s"></span>
+  </div>
+  <div class="vm-art-hero-inner">
+    <div id="art-meta" class="vm-art-meta"></div>
+    <h1 id="art-title" class="vm-art-title"></h1>
+    <p id="art-teaser" class="vm-art-teaser"></p>
+    <div class="vm-record-rule"></div>
+  </div>
+</section>
+
+<div class="vm-art-grid">
+
+  <aside class="vm-art-toc">
+    <div class="vm-art-side-key">contents</div>
+    <nav id="toc" class="vm-toc-links" aria-label="Table of contents"></nav>
+    <div class="vm-art-side-note">written between<br>training runs<br>san cristóbal</div>
+  </aside>
+
+  <article id="art-body" class="vm-art-body"></article>
+
+  <aside class="vm-art-aside">
+    <div>
+      <div class="vm-art-side-key">share</div>
+      <div class="vm-art-share">
+        <a id="share-x" href="#" target="_blank" rel="noopener">x ↗</a>
+        <a id="share-in" href="#" target="_blank" rel="noopener">linkedin ↗</a>
+        <button id="copy-link" class="vm-copy" type="button">copy link</button>
+      </div>
+    </div>
+    <div class="vm-art-next">
+      <div class="vm-art-side-key">next entries</div>
+      <div id="next-entries" class="vm-art-next-list"></div>
+    </div>
+  </aside>
+
+</div>
+
+</main>
+
+<footer class="vm-footer vm-footer--ruled">
+  <div class="vm-footer-log">EOF · <a href="./blog.html">back to The Night Shift ←</a></div>
+  <div id="footer-links" class="vm-footer-links"></div>
+</footer>
+
+<script type="module" src="./js/post.js"></script>
+</body>
+</html>

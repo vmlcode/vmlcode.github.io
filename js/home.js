@@ -221,7 +221,7 @@ function renderBlogTeaser(site, posts) {
         <span>obs. ${esc(p.date)}</span>
         <span class="vm-post-tag">#${esc(p.tag)}</span>
       </div>
-      <h3 class="vm-post-title"><a href="./blog.html">${esc(p.title)}</a></h3>
+      <h3 class="vm-post-title"><a href="${esc(p.url)}">${esc(p.title)}</a></h3>
       <p class="vm-post-blurb">${esc(p.blurb || p.teaser)}</p>
     </article>`).join('');
 }
