@@ -1,0 +1,8 @@
+[
+  { "name": "Python", "level": 4 },
+  { "name": "PyTorch", "level": 4 },
+  { "name": "TensorFlow / Keras", "level": 3 },
+  { "name": "OpenCV · scikit-learn", "level": 3 },
+  { "name": "FastAPI · SQL", "level": 3 },
+  { "name": "Docker · Git · Linux", "level": 2 }
+]

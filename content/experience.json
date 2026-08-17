@@ -1,0 +1,41 @@
+[
+  {
+    "commit": "3f8a2c",
+    "expedition": "Expedition III · 2025 — now",
+    "title": "Research Assistant — Computer Vision Lab, UNET",
+    "body": "The lab noticed me after the Python workshop and handed me a telescope of my own: a crop-disease dataset and a deadline. Days are for labeling, nights for training runs — the sky is clearer then, and so is the cluster queue.",
+    "tags": ["PyTorch", "CUDA", "Datasets"],
+    "node": "filled",
+    "plate": {
+      "label": "[ photo: you at the CV lab ]",
+      "caption": "plate III — the observatory, 2 a.m., allegedly",
+      "image": null
+    }
+  },
+  {
+    "commit": "b1d9e0",
+    "expedition": "Expedition II · 2024",
+    "title": "Workshop Instructor — Python for Engineers",
+    "body": "Sixty classmates who feared semicolons (good news: Python has none), eight weeks, zero loop-related casualties. Explaining a thing is the fastest way to find the holes in your own map of it — by week eight they navigated without me.",
+    "tags": ["Python", "Teaching"],
+    "node": "accent",
+    "plate": {
+      "label": "[ photo: teaching the workshop ]",
+      "caption": "plate II — sixty new navigators, one whiteboard",
+      "image": null
+    }
+  },
+  {
+    "commit": "a0c0de",
+    "expedition": "Expedition I · 2022",
+    "title": "First light — AI Engineering at UNET",
+    "body": "Astronomers call a telescope's first observation \"first light\". Mine was a linear-algebra lecture where I understood almost nothing and wanted, immediately, to understand all of it. I asked \"what's a tensor?\" out loud. Nobody laughed (much).",
+    "tags": ["Linear algebra", "Wonder"],
+    "node": "muted",
+    "plate": {
+      "label": "[ photo: campus, first year ]",
+      "caption": "plate I — before the fine-tuning",
+      "image": null
+    }
+  }
+]

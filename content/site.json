@@ -1,0 +1,79 @@
+{
+  "name": "Victor Maldonado",
+  "handle": "victor",
+  "hero": {
+    "promptWords": [
+      "observatorio",
+      "computer-vision",
+      "pytorch",
+      "nlp",
+      "edge-ai",
+      "deep-learning",
+      "python",
+      "data-wrangling"
+    ],
+    "command": "./observatorio.sh",
+    "roles": [
+      "AI/ML engineer",
+      "backend developer",
+      "full-stack developer",
+      "data wrangler"
+    ],
+    "intro": "AI/ML engineering student at UNET — and the person who builds the backend it runs on. The night shift is voluntary.",
+    "sessionLog": [
+      { "text": "[22:41] session start · 7.7669° N, 72.2250° W · san cristóbal · seeing: excellent", "accent": true },
+      { "text": "[22:41] epoch 07 · loss 0.041 ↓ · status: still learning · overfitting: only to coffee" },
+      { "text": "[22:42] tonight's target: gradient descent, as always" }
+    ],
+    "figureCaption": "fig. 1 — validation loss traced against the sky, 2022 → tonight"
+  },
+  "nav": [
+    { "label": "α Experience", "href": "#experience" },
+    { "label": "β Work", "href": "#work" },
+    { "label": "γ Blog", "href": "./blog.html" },
+    { "label": "ε Stack", "href": "#instrumentation" },
+    { "label": "δ Contact", "href": "#contact" }
+  ],
+  "sections": {
+    "experience": {
+      "eyebrow": "α — expedition log · git log --follow victor",
+      "lede": "Three expeditions committed. Each one moved the telescope."
+    },
+    "work": {
+      "eyebrow": "β — catalogue · checkpoints that survived validation",
+      "lede": "Objects bright enough to name — click one to open its record. Everything else went to /dev/null."
+    },
+    "instrumentation": {
+      "eyebrow": "ε — instrumentation · technologies & certifications",
+      "lede": "The optics I observe with, and the papers that say I can.",
+      "skillsLabel": "// optics — calibration levels",
+      "skillsNote": "calibrated against real projects, not tutorials — recalibrated often",
+      "certsLabel": "// certificates — signed & verified"
+    },
+    "blog": {
+      "eyebrow": "γ — the night shift · the blog",
+      "lede": "Latest three. Written while the models trained.",
+      "linkLabel": "read the night shift ↗"
+    }
+  },
+  "blogPage": {
+    "command": "cat /blog",
+    "backLabel": "← El Observatorio",
+    "kicker": "observation journal · {count} entries · updated weekly-ish",
+    "titleLead": "The ",
+    "titleAccent": "Night Shift",
+    "subtitle": "Everything I learn, written down while the models train. Some findings replicate.",
+    "outro": "$ less — that's all for now · ",
+    "outroLink": "back to El Observatorio ←"
+  },
+  "footer": {
+    "log": "[04:12] session end · exit code 0 · reachable most nights",
+    "blogLog": "syndicated nowhere · rss someday",
+    "links": [
+      { "label": "github ↗", "href": "#" },
+      { "label": "linkedin ↗", "href": "#" },
+      { "label": "x ↗", "href": "#" },
+      { "label": "mail ↗", "href": "#" }
+    ]
+  }
+}

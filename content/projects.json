@@ -1,0 +1,53 @@
+[
+  {
+    "id": "VM-001 · ckpt_01.pt",
+    "name": "Sabor Analytics",
+    "blurb": "NLP · magnitude 82% sarcasm recall",
+    "role": "Solo — data, model, UI",
+    "year": "2026",
+    "metric": "82% sarcasm recall",
+    "problem": "Off-the-shelf Spanish sentiment models read Venezuelan speech as neutral or, worse, hostile. Regional irony, diminutives and slang all land outside their training distribution — so a comment that is affectionate gets scored as an insult.",
+    "approach": "I collected and hand-labeled 12k regional comments, fine-tuned a multilingual transformer on them, and added a sarcasm head trained on a smaller, carefully adversarial subset. The demo shows the model’s confidence per token so you can see exactly where it changes its mind.",
+    "lesson": "Labeling my own language taught me more about the data than any architecture choice did.",
+    "stack": ["PyTorch", "Transformers", "spaCy", "FastAPI"],
+    "shot": {
+      "label": "[ screenshot: sentiment dashboard ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  },
+  {
+    "id": "VM-002 · ckpt_02.tflite",
+    "name": "AgroVision",
+    "blurb": "edge CV · visible from a $40 phone",
+    "role": "Model + mobile integration",
+    "year": "2025",
+    "metric": "11 MB · 94% top-1",
+    "problem": "Coffee growers near San Cristóbal lose harvests to leaf rust that is obvious three weeks too late. Cloud inference is not an option: the fields have no signal and the phones are entry-level Androids.",
+    "approach": "A MobileNet-family classifier trained on a field-collected dataset, pruned and quantized to int8 until it ran fully offline in under 400 ms on a $40 device. The app stores diagnoses locally and syncs when the grower gets back to town.",
+    "lesson": "Constraints are a design brief. The 11 MB limit made the model better, not just smaller.",
+    "stack": ["TensorFlow Lite", "OpenCV", "Android", "Quantization"],
+    "shot": {
+      "label": "[ photo: app in a coffee field ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  },
+  {
+    "id": "VM-003 · ckpt_03.idx",
+    "name": "StudyRAG",
+    "blurb": "LLMs · retrieval over my own notes",
+    "role": "Solo — retrieval + interface",
+    "year": "2025",
+    "metric": "4 semesters indexed",
+    "problem": "Four semesters of handwritten and half-typed notes, none of them searchable, all of them needed the night before an exam.",
+    "approach": "OCR into a cleaned corpus, chunked and embedded into a vector index, with a retrieval layer that always cites the source page. It answers in the wording of my own notes — including my own mistakes, which turned out to be a useful study feature.",
+    "lesson": "A retrieval system is only as honest as its citations. Showing sources fixed my trust in it.",
+    "stack": ["LangChain", "FastAPI", "pgvector", "Tesseract"],
+    "shot": {
+      "label": "[ screenshot: chat over course notes ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  }
+]

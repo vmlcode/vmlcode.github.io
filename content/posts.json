@@ -1,0 +1,56 @@
+[
+  {
+    "date": "2026-08-12",
+    "tag": "nlp",
+    "mins": 6,
+    "title": "Why my sarcasm model kept flagging my own tweets",
+    "teaser": "A debugging story with an uncomfortable conclusion about my online personality.",
+    "blurb": "A debugging story with an uncomfortable conclusion.",
+    "url": "#"
+  },
+  {
+    "date": "2026-07-28",
+    "tag": "edge",
+    "mins": 9,
+    "title": "Quantization for people with slow internet",
+    "teaser": "Everything I know about shrinking models, learned on Venezuelan bandwidth.",
+    "blurb": "Shrinking models, learned on Venezuelan bandwidth.",
+    "url": "#"
+  },
+  {
+    "date": "2026-07-03",
+    "tag": "teaching",
+    "mins": 4,
+    "title": "Notes from teaching Python to 60 engineers",
+    "teaser": "What finally made loops click. Spoiler: arepas were involved.",
+    "blurb": "What finally made loops click. Arepas were involved.",
+    "url": "#"
+  },
+  {
+    "date": "2026-06-14",
+    "tag": "nlp",
+    "mins": 7,
+    "title": "Building a Venezuelan Spanish corpus from scratch",
+    "teaser": "12k comments, three labeling disagreements per family dinner.",
+    "blurb": "12k comments, three labeling disagreements per family dinner.",
+    "url": "#"
+  },
+  {
+    "date": "2026-05-30",
+    "tag": "edge",
+    "mins": 5,
+    "title": "Benchmarking on a $40 phone (a love letter)",
+    "teaser": "The device that keeps my models honest.",
+    "blurb": "The device that keeps my models honest.",
+    "url": "#"
+  },
+  {
+    "date": "2026-05-02",
+    "tag": "study",
+    "mins": 8,
+    "title": "My notes answer back now: lessons from StudyRAG",
+    "teaser": "On retrieval, citations, and trusting your own handwriting.",
+    "blurb": "On retrieval, citations, and trusting your own handwriting.",
+    "url": "#"
+  }
+]

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-vm-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Night Shift — Victor Maldonado</title>
+<meta name="description" content="The Night Shift — notes on machine learning, edge AI, NLP and teaching, written by Victor Maldonado while the models train.">
+<meta name="author" content="Victor Maldonado">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Night Shift — Victor Maldonado">
+<meta property="og:description" content="Everything I learn, written down while the models train. Some findings replicate.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="./styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
+<script>
+  try {
+    var t = localStorage.getItem('vm-theme');
+    if (t) document.documentElement.setAttribute('data-vm-theme', t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="vm-nav">
+  <div class="vm-prompt">
+    <span id="prompt-user">victor</span>@observatorio:~$
+    <span id="prompt-cmd" class="vm-cmd">cat /blog</span><span class="vm-caret" aria-hidden="true"></span>
+  </div>
+  <a id="back-link" class="vm-back" href="./index.html">← El Observatorio</a>
+  <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme">☾ night shift</button>
+</header>
+
+<noscript>
+  <p class="vm-noscript">This page loads its posts from JSON, so JavaScript is required. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
+</noscript>
+
+<main>
+
+<section class="vm-blog-hero">
+  <div id="stars" class="vm-stars" aria-hidden="true"></div>
+  <div id="blog-kicker" class="vm-blog-kicker"></div>
+  <h1 id="blog-title" class="vm-blog-title"></h1>
+  <p id="blog-subtitle" class="vm-blog-sub"></p>
+  <div id="filters" class="vm-filters" role="group" aria-label="Filter posts by tag"></div>
+</section>
+
+<section class="vm-blog-body">
+  <div id="post-list" class="vm-entries"></div>
+  <p class="vm-blog-outro">
+    <span id="blog-outro"></span><a id="blog-outro-link" href="./index.html"></a>
+  </p>
+</section>
+
+</main>
+
+<footer class="vm-footer vm-footer--ruled">
+  <div id="footer-log" class="vm-footer-log"></div>
+  <div id="footer-links" class="vm-footer-links"></div>
+</footer>
+
+<script type="module" src="./js/blog.js"></script>
+</body>
+</html>

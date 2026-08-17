@@ -129,6 +129,14 @@ figure { margin: 0; }
   transition: transform .4s ease;
 }
 .vm-plate-wrap:hover .vm-plate { transform: translateY(-5px); }
+/* Real photos replace the hatch placeholder; the sepia keeps them "plate"-like. */
+.vm-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(.22) saturate(.82) contrast(1.05);
+}
 .vm-plate-label {
   font: 11px var(--font-mono);
   color: var(--vm-fg-45);
@@ -201,6 +209,7 @@ figure { margin: 0; }
   width: 52px; height: 1px;
   background: linear-gradient(90deg, transparent, var(--vm-acc));
   animation: vm-shoot 12s linear 3s infinite;
+  pointer-events: none;
 }
 
 .vm-log {
@@ -439,6 +448,8 @@ figure { margin: 0; }
 .vm-post-meta { display: flex; gap: 12px; font: 11.5px var(--font-mono); color: var(--vm-fg-45); }
 .vm-post-tag { color: var(--vm-acc-txt); }
 .vm-post-title { font-size: 23px; margin-top: 7px; line-height: 1.25; }
+.vm-post-title a { color: inherit; }
+.vm-post-title a:hover { color: var(--vm-acc-txt); }
 .vm-post-blurb { font-size: 13px; color: var(--vm-fg-60); margin-top: 6px; }
 
 /* ── footer ───────────────────────────────────────────────────────────── */
@@ -453,6 +464,93 @@ figure { margin: 0; }
 }
 .vm-footer-log { font: 12px var(--font-mono); color: var(--vm-fg-45); }
 .vm-footer-links { display: flex; gap: 20px; font: 12.5px var(--font-mono); }
+
+.vm-footer--ruled { border-top: 1px solid var(--vm-line); }
+
+/* ── blog index ───────────────────────────────────────────────────────── */
+.vm-back { font-size: 14px; white-space: nowrap; }
+
+.vm-blog-hero {
+  position: relative;
+  padding: 80px 48px 56px;
+  border-bottom: 1px solid var(--vm-line);
+  overflow: hidden;
+}
+.vm-blog-kicker {
+  font: 11px var(--font-mono);
+  color: var(--vm-acc-txt);
+  margin-bottom: 14px;
+  animation: vm-rise .6s ease .1s both;
+}
+.vm-blog-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  animation: vm-rise .6s ease .3s both;
+}
+.vm-blog-title em { font-style: italic; color: var(--vm-acc-txt); }
+.vm-blog-sub {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--vm-fg-60);
+  margin-top: 12px;
+  max-width: 440px;
+  animation: vm-rise .6s ease .5s both;
+}
+
+.vm-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+  animation: vm-rise .6s ease .65s both;
+}
+.vm-filter {
+  cursor: pointer;
+  font: 11.5px var(--font-mono);
+  color: var(--vm-fg-45);
+  background: transparent;
+  border: 1px solid var(--vm-line);
+  border-radius: 3px;
+  padding: 4px 12px;
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+.vm-filter:hover { background: var(--vm-hover); color: var(--vm-fg-60); }
+.vm-filter.is-active { color: var(--vm-acc-txt); border-color: var(--vm-acc); }
+
+.vm-blog-body { padding: 36px 48px 64px; max-width: 860px; }
+.vm-entries { display: flex; flex-direction: column; }
+.vm-entry {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--vm-line);
+  transition: padding .3s ease;
+}
+.vm-entry:hover { padding-left: 14px; }
+.vm-entry-meta { display: flex; flex-wrap: wrap; gap: 14px; font: 11.5px var(--font-mono); color: var(--vm-fg-45); }
+.vm-entry-title { font-size: 28px; margin-top: 8px; line-height: 1.25; }
+.vm-entry-title a { color: inherit; }
+.vm-entry-title a:hover { color: var(--vm-acc-txt); }
+.vm-entry-teaser { font-size: 13.5px; color: var(--vm-fg-60); margin-top: 7px; max-width: 640px; }
+
+.vm-blog-outro { font: 12px var(--font-mono); color: var(--vm-fg-45); margin-top: 26px; }
+.vm-empty { font: 12px var(--font-mono); color: var(--vm-fg-45); padding: 28px 0; }
+
+/* ── fallbacks ────────────────────────────────────────────────────────── */
+.vm-noscript, .vm-error {
+  margin: 0;
+  padding: var(--space-4) 48px;
+  font: 12.5px var(--font-mono);
+  color: var(--vm-fg-60);
+  border-bottom: 1px solid var(--vm-line);
+}
+.vm-error code {
+  color: var(--vm-acc-txt);
+  background: var(--vm-hover);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+}
 
 /* ══ responsive ══════════════════════════════════════════════════════════
    The source component was authored at a fixed 1180px preview width; these
@@ -485,6 +583,12 @@ figure { margin: 0; }
   .vm-record { padding: 28px 20px 32px; }
   .vm-prose, .vm-record-p { text-align: left; }
 
+  .vm-blog-hero { padding: 56px 24px 40px; }
+  .vm-blog-title { font-size: 36px; }
+  .vm-blog-body { padding: 28px 24px 48px; }
+  .vm-entry-title { font-size: 23px; }
+  .vm-noscript, .vm-error { padding-inline: 24px; }
+
   .vm-footer { padding: 24px; }
 }
 
@@ -494,6 +598,8 @@ figure { margin: 0; }
   .vm-commit-title { font-size: 23px; }
   .vm-record-title { font-size: 27px; }
   .vm-row-name { font-size: 22px; }
+  .vm-blog-title { font-size: 30px; }
+  .vm-entry-title { font-size: 21px; }
 }
 
 /* Respect the reader's motion preference — this page is unusually animated. */
