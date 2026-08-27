@@ -127,8 +127,19 @@ export function renderStars(el, stars) {
 /** Renders a plate: a real image if content supplies one, otherwise the hatch placeholder. */
 export function plateHTML(plate, extraClass = '') {
   const cls = `vm-plate${extraClass ? ' ' + extraClass : ''}`;
+  const label = `<span class="vm-plate-label">${esc((plate && plate.label) || '')}</span>`;
   if (plate && plate.image) {
-    return `<div class="${cls}"><img src="${esc(plate.image)}" alt="${esc(plate.alt || plate.label || '')}"></div>`;
+    // `fit: "contain"` is for logos and artwork: no crop, no sepia ageing.
+    const fit = plate.fit === 'contain' ? ' vm-plate--contain' : '';
+    // A missing file would otherwise leave an empty frame. Fall back to the label
+    // and rewrite the class list, which also drops `--contain` so the frame goes
+    // back to the hatch placeholder instead of a padded solid box.
+    const fallback = `this.parentNode.className='${cls} vm-plate--empty';`
+      + `this.parentNode.innerHTML='${label.replace(/"/g, '&quot;').replace(/'/g, "\\'")}'`;
+    // Lazy because every plate sits below the fold — and because a plate hidden
+    // by a breakpoint (the company plate on phones) then costs no download.
+    return `<div class="${cls}${fit}"><img src="${esc(plate.image)}" alt="${esc(plate.alt || plate.label || '')}" loading="lazy" onerror="${fallback}"></div>`;
   }
-  return `<div class="${cls}"><span class="vm-plate-label">${esc((plate && plate.label) || '')}</span></div>`;
+  // No image at all: a labelled placeholder frame.
+  return `<div class="${cls} vm-plate--empty">${label}</div>`;
 }

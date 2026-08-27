@@ -19,20 +19,16 @@
       "full-stack developer",
       "data wrangler"
     ],
-    "intro": "AI/ML engineering student at UNET — and the person who builds the backend it runs on. The night shift is voluntary.",
+    "intro": "Developing AI systems that learn from data, and building the infrastructure to make them work in production.",
     "sessionLog": [
       {
-        "text": "[22:41] session start · 7.7669° N, 72.2250° W · san cristóbal · seeing: excellent",
+        "text": "[22:41] session start · 7.7669° N, 72.2250° W · Bogota· seeing: excellent",
         "accent": true
       },
       {
         "text": "[22:41] epoch 07 · loss 0.041 ↓ · status: still learning · overfitting: only to coffee"
-      },
-      {
-        "text": "[22:42] tonight's target: gradient descent, as always"
       }
-    ],
-    "figureCaption": "fig. 1 — validation loss traced against the sky, 2022 → tonight"
+    ]
   },
   "nav": [
     {
@@ -58,23 +54,18 @@
   ],
   "sections": {
     "experience": {
-      "eyebrow": "α — expedition log · git log --follow victor",
-      "lede": "Three expeditions committed. Each one moved the telescope."
+      "eyebrow": "α — expedition log · git log --follow victor"
     },
     "work": {
-      "eyebrow": "β — catalogue · checkpoints that survived validation",
-      "lede": "Objects bright enough to name — click one to open its record. Everything else went to /dev/null."
+      "eyebrow": "β — catalogue · checkpoints that survived validation"
     },
     "instrumentation": {
       "eyebrow": "ε — instrumentation · technologies & certifications",
-      "lede": "The optics I observe with, and the papers that say I can.",
-      "skillsLabel": "// optics — calibration levels",
-      "skillsNote": "calibrated against real projects, not tutorials — recalibrated often",
+      "skillsNote": "calibrated against real projects",
       "certsLabel": "// certificates — signed & verified"
     },
     "blog": {
-      "eyebrow": "γ — the night shift · the blog",
-      "lede": "Latest three. Written while the models trained.",
+      "eyebrow": "γ — Publications",
       "linkLabel": "read the night shift ↗"
     }
   },
@@ -85,7 +76,6 @@
     "titleLead": "The ",
     "titleAccent": "Night Shift",
     "subtitle": "Everything I learn, written down while the models train. Some findings replicate.",
-    "outro": "$ less — that's all for now · ",
     "outroLink": "back home ←"
   },
   "footer": {

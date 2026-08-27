@@ -104,28 +104,104 @@ function sectionHead(id, meta) {
 }
 
 // ── experience ───────────────────────────────────────────────────────────
+function tagsHTML(tags) {
+  if (!tags || !tags.length) return '';
+  return `<div class="vm-tags">${tags.map((t) => `<span class="vm-tag">${esc(t)}</span>`).join('')}</div>`;
+}
+
+/** A project sits one level below a role: name, one-line body, its own tags.
+    `shots` is optional — when present the name becomes a toggle that reveals the
+    photos, so a project without images stays a plain, non-interactive heading. */
+function projectHTML(p, key, open) {
+  const shots = p.shots && p.shots.length ? p.shots : null;
+  const isOpen = !!shots && open.has(key);
+
+  const head = shots
+    ? `<button class="vm-project-toggle" type="button" data-shots="${esc(key)}"
+               aria-expanded="${isOpen}" aria-controls="shots-${esc(key)}">
+         <span class="vm-project-name">${esc(p.name)}</span>
+         <span class="vm-project-hint">${isOpen ? '− hide' : `+ ${shots.length} photo${shots.length > 1 ? 's' : ''}`}</span>
+       </button>`
+    : `<h4 class="vm-project-name">${esc(p.name)}</h4>`;
+
+  const gallery = isOpen
+    ? `<div class="vm-shots" id="shots-${esc(key)}">${shots.map((sh) => `
+        <figure class="vm-shot">
+          ${plateHTML(sh, 'vm-shot-plate')}
+          ${sh.caption ? `<figcaption class="vm-caption">${esc(sh.caption)}</figcaption>` : ''}
+        </figure>`).join('')}</div>`
+    : '';
+
+  return `
+    <li class="vm-project">
+      ${head}
+      ${p.body ? `<p class="vm-project-body">${esc(p.body)}</p>` : ''}
+      ${tagsHTML(p.tags)}
+      ${gallery}
+    </li>`;
+}
+
+/** A role belongs to one company and carries the projects worked in it. */
+function roleHTML(r, key, open) {
+  const projects = r.projects && r.projects.length
+    ? `<ul class="vm-projects">${r.projects.map((p, i) => projectHTML(p, `${key}-${i}`, open)).join('')}</ul>`
+    : '';
+  return `
+    <li class="vm-role">
+      <div class="vm-role-head">
+        <h3 class="vm-role-title">${esc(r.title)}</h3>
+        ${r.period ? `<span class="vm-role-period">${esc(r.period)}</span>` : ''}
+      </div>
+      ${r.body ? `<p class="vm-prose vm-role-body">${esc(r.body)}</p>` : ''}
+      ${tagsHTML(r.tags)}
+      ${projects}
+    </li>`;
+}
+
 function renderExperience(site, entries) {
   sectionHead('experience', site.sections.experience);
   const nodeClass = { filled: ' vm-node--filled', accent: ' vm-node--acc', muted: '' };
+  const timeline = $('#timeline');
+  const open = new Set();   // "entry-role-project" keys of the expanded galleries
 
-  $('#timeline').innerHTML = entries.map((e) => `
-    <article class="vm-expedition">
-      <figure class="vm-plate-wrap">
-        ${plateHTML(e.plate)}
-        <figcaption class="vm-caption">${esc(e.plate.caption)}</figcaption>
-      </figure>
-      <div class="vm-commit">
-        <span class="vm-node${nodeClass[e.node] ?? ''}" aria-hidden="true"></span>
-        <div class="vm-commit-meta">
-          <span class="vm-hash">commit ${esc(e.commit)}</span>
-          <span>${esc(e.expedition)}</span>
+  const paint = () => {
+    timeline.innerHTML = entries.map((e, ei) => {
+      // Entries with `roles` nest company → role → project; flat entries (a single
+      // title + body, e.g. a workshop or a milestone) keep the original shape.
+      const detail = e.roles && e.roles.length
+        ? `<ul class="vm-roles">${e.roles.map((r, ri) => roleHTML(r, `${ei}-${ri}`, open)).join('')}</ul>`
+        : `${e.body ? `<p class="vm-prose">${esc(e.body)}</p>` : ''}${tagsHTML(e.tags)}`;
+
+      return `
+      <article class="vm-expedition">
+        <figure class="vm-plate-wrap">
+          ${plateHTML(e.plate)}
+          <figcaption class="vm-caption">${esc(e.plate.caption)}</figcaption>
+        </figure>
+        <div class="vm-commit">
+          <span class="vm-node${nodeClass[e.node] ?? ''}" aria-hidden="true"></span>
+          <div class="vm-commit-meta">
+            <span>${esc(e.expedition)}</span>
+            ${e.meta ? `<span>${esc(e.meta)}</span>` : ''}
+          </div>
+          <h2 class="vm-commit-title">${esc(e.company || e.title)}</h2>
+          ${detail}
         </div>
-        <h2 class="vm-commit-title">${esc(e.title)}</h2>
-        <p class="vm-prose">${esc(e.body)}</p>
-        <div class="vm-tags">${e.tags.map((t) => `<span class="vm-tag">${esc(t)}</span>`).join('')}</div>
-      </div>
-    </article>
-  `).join('');
+      </article>`;
+    }).join('');
+  };
+
+  timeline.addEventListener('click', (ev) => {
+    const toggle = ev.target.closest('[data-shots]');
+    if (!toggle) return;
+    const key = toggle.dataset.shots;
+    // Independent toggles: opening one gallery must not collapse another.
+    if (open.has(key)) open.delete(key); else open.add(key);
+    paint();
+    timeline.querySelector(`[data-shots="${key}"]`)?.focus();
+  });
+
+  paint();
 }
 
 // ── catalogue ────────────────────────────────────────────────────────────

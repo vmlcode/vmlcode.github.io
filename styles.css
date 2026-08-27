@@ -149,6 +149,10 @@ figure { margin: 0; }
   display: block;
   filter: sepia(.22) saturate(.82) contrast(1.05);
 }
+/* Logos and artwork: fit whole, drop the photo ageing, breathe inside the frame. */
+.vm-plate--contain { background: var(--vm-plate-b); padding: 18px; }
+.vm-plate--contain img { object-fit: contain; filter: none; }
+
 .vm-plate-label {
   font: 11px var(--font-mono);
   color: var(--vm-fg-45);
@@ -336,6 +340,114 @@ figure { margin: 0; }
 .vm-commit-meta { display: flex; flex-wrap: wrap; gap: 12px; font: 12px var(--font-mono); color: var(--vm-fg-45); }
 .vm-hash { color: var(--vm-acc-txt); }
 .vm-commit-title { font-size: 28px; margin-top: 8px; }
+
+/* Company → role → project. Roles hang off a spine that closes on the last one,
+   so the tree reads like the `git log --graph` the section is styled after. */
+.vm-roles {
+  list-style: none;
+  margin: 22px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.vm-role { position: relative; padding-left: 24px; }
+.vm-role::before {                       /* spine, bridging the 28px gap */
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: -28px;
+  width: 1px;
+  background: var(--vm-line);
+}
+.vm-role:last-child::before { bottom: auto; height: 11px; }  /* closes as └ */
+.vm-role::after {                        /* elbow into the role title */
+  content: "";
+  position: absolute;
+  left: 0; top: 11px;
+  width: 15px; height: 1px;
+  background: var(--vm-line);
+}
+.vm-role-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+}
+.vm-role-title { font-size: 17px; letter-spacing: .01em; }
+.vm-role-period { font: 11px var(--font-mono); color: var(--vm-acc-txt); }
+.vm-role-body { margin-top: 8px; }
+
+.vm-projects {
+  list-style: none;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.vm-project { position: relative; padding-left: 18px; }
+.vm-project::before {                    /* echoes .vm-node, one level down */
+  content: "";
+  position: absolute;
+  left: 0; top: 7px;
+  width: 5px; height: 5px;
+  border: 1px solid var(--vm-acc);
+}
+/* Threads the project nodes into their own timeline. Each segment spans the gap
+   between two squares only — edge to edge, never across a node's interior: the
+   7px box sits at top:7px so it ends at 14px, and the next one starts 16px (gap)
+   + 7px below this block. */
+.vm-project::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 14px; bottom: -23px;
+  width: 1px;
+  background: var(--vm-acc);
+}
+.vm-project:last-child::after { content: none; }
+.vm-project-name {
+  font: 12px var(--font-mono);
+  line-height: 1.25;      /* pins the first line so ::before stays on the title */
+  margin: 0;              /* h4 is not in the global heading reset */
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--vm-fg);
+}
+/* Only projects that actually carry `shots` become interactive. */
+.vm-project-toggle {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.vm-project-toggle:hover .vm-project-name { color: var(--vm-acc-txt); }
+.vm-project-hint {
+  font: 10.5px var(--font-mono);
+  letter-spacing: .04em;
+  color: var(--vm-acc-txt);
+}
+.vm-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.vm-shot-plate { height: 140px; border-width: 4px; }
+.vm-shot .vm-caption { margin-top: 6px; }
+.vm-project-body {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--vm-fg-60);
+  margin-top: 6px;
+  max-width: 560px;
+}
+.vm-project .vm-tags { margin-top: 10px; }
 .vm-prose {
   font-size: 14px;
   line-height: 1.7;
@@ -776,6 +888,32 @@ figure { margin: 0; }
    The source component was authored at a fixed 1180px preview width; these
    breakpoints are what make it survive as a real, shipped page.
    ══════════════════════════════════════════════════════════════════════ */
+/* ── page column ────────────────────────────────────────────────────────
+   Nothing here capped its width, so on a wide monitor every band ran the full
+   viewport while the copy inside stayed at its reading measure — content pinned
+   left, dead space right. The bands stay full-bleed (their borders and rules
+   are meant to span the screen); only the content inside is capped and centred.
+
+   `max()` makes the formula inert until the viewport exceeds --vm-page + the
+   flat 48px inset, so tablet and mobile keep exactly the padding they had.
+   1236px is the article grid's designed width (200 + 720 + 220 plus two 48px
+   gaps); using it everywhere gives the nav, hero, sections and grid one shared
+   left edge instead of three competing ones.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root { --vm-page: 1236px; }
+
+.vm-nav, .vm-hero, .vm-section, .vm-footer,
+.vm-blog-hero, .vm-blog-body, .vm-art-hero, .vm-art-grid,
+.vm-noscript, .vm-error {
+  padding-inline: max(48px, calc((100% - var(--vm-page)) / 2));
+}
+
+/* Percentage padding resolves against the viewport, not the element, so a band
+   that also caps its own width would compute padding wider than its box. The
+   blog's reading measure moves down to its children instead. */
+.vm-blog-body { max-width: none; }
+.vm-entries, .vm-blog-outro { max-width: 860px; }
+
 @media (max-width: 1000px) {
   .vm-record-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .vm-posts { grid-template-columns: 1fr 1fr; }
@@ -879,15 +1017,34 @@ figure { margin: 0; }
   /* ── experience ────────────────────────────────────────────────────── */
   .vm-timeline { gap: 34px; }
   .vm-expedition { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .vm-plate-wrap { max-width: none; }
-  .vm-plate { height: 132px; border-width: 5px; }
-  .vm-plate-wrap .vm-caption { margin-bottom: 14px; }
+  /* The company plate is dropped entirely on narrow screens: stacked above the
+     copy it cost a screenful before the first word, and it carries no
+     information the commit header does not already state. Its caption goes with
+     it — an orphaned "plate III — …" line reads as a bug. Per-project galleries
+     under .vm-shots are unaffected; those are opened on demand. */
+  .vm-plate-wrap { display: none; }
   .vm-commit { padding-left: 16px; }
   .vm-node { display: none; }
   .vm-commit-meta { font-size: 11px; gap: 8px; }
   .vm-commit-title { font-size: 23px; line-height: 1.25; margin-top: 7px; }
   .vm-prose { font-size: 13.5px; line-height: 1.7; margin-top: 9px; text-align: left; max-width: none; }
   .vm-tags { gap: 7px; margin-top: 13px; }
+  .vm-roles { gap: 22px; margin-top: 18px; }
+  .vm-role { padding-left: 16px; }
+  .vm-role::before { bottom: -22px; }
+  .vm-role:last-child::before { height: 9px; }
+  .vm-role::after { width: 10px; top: 9px; }
+  .vm-role-head { gap: 8px; }
+  .vm-role-title { font-size: 15.5px; }
+  .vm-role-period { font-size: 10.5px; }
+  .vm-projects { gap: 14px; margin-top: 13px; }
+  .vm-project { padding-left: 14px; }
+  .vm-project::after { bottom: -21px; }   /* mobile gap is 14px, not 16px */
+  .vm-project-name { font-size: 11px; }
+  .vm-project-body { font-size: 13px; line-height: 1.7; max-width: none; }
+  .vm-project-hint { font-size: 10px; }
+  .vm-shots { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .vm-shot-plate { height: 104px; border-width: 3px; }
 
   /* ── catalogue ─────────────────────────────────────────────────────── */
   .vm-row { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 16px 0; }
