@@ -1,0 +1,75 @@
+[
+  {
+    "company": "Hamal Solutions",
+    "node": "filled",
+    "plate": {
+      "label": "[ foto: en el laboratorio de visión ]",
+      "caption": "",
+      "image": "./content/images/logohamal-menu-min.png",
+      "fit": "contain"
+    },
+    "roles": [
+      {
+        "title": "Ingeniero de Software/IA",
+        "period": "2023 — hoy",
+        "body": "Ingeniería de software e IA en móvil, embebidos y nube — desde el handshake del firmware hasta el ranking de recomendaciones.",
+        "projects": [
+          {
+            "name": "Puente BLE biomédico",
+            "body": "Integración IoT y BLE para dispositivos biomédicos: emparejamiento, streaming y manejo de reconexiones entre el hardware y el cliente móvil.",
+            "tags": ["BLE", "React Native", "TypeScript"],
+            "shots": [
+              {
+                "image": "./content/images/logohamal-menu-min.png",
+                "label": "[ foto: banco de pruebas ]",
+                "fit": "contain",
+                "caption": "toma 1 — demo, reemplázame"
+              },
+              {
+                "image": null,
+                "label": "[ foto: captura BLE ]",
+                "caption": "toma 2 — todavía sin archivo"
+              }
+            ]
+          },
+          {
+            "name": "Búsqueda y recomendación con IA",
+            "body": "Sistemas de búsqueda y recomendación sobre AWS, desde el pipeline de indexación hasta el ranking y la evaluación.",
+            "tags": ["AWS", "IA", "Node.js"]
+          },
+          {
+            "name": "Producto móvil y web",
+            "body": "Desarrollo en React y móvil nativo para productos de cara al cliente, incluida la capa de componentes compartidos y la integración con la API.",
+            "tags": ["React", "React Native", "Java"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "commit": "b1d9e0",
+    "expedition": "Expedición II · 2024",
+    "title": "Instructor de taller — Python para ingenieros",
+    "body": "Sesenta compañeros que le temían a los punto y coma (buena noticia: Python no los usa), ocho semanas, cero bajas por culpa de un bucle. Explicar algo es la forma más rápida de encontrar los huecos en tu propio mapa — para la semana ocho navegaban sin mí.",
+    "tags": ["Python", "Docencia"],
+    "node": "accent",
+    "plate": {
+      "label": "[ foto: dando el taller ]",
+      "caption": "lámina II — sesenta navegantes nuevos, una pizarra",
+      "image": null
+    }
+  },
+  {
+    "commit": "a0c0de",
+    "expedition": "Expedición I · 2022",
+    "title": "Primera luz — Ingeniería en IA en la UNET",
+    "body": "Los astrónomos llaman \"primera luz\" a la primera observación de un telescopio. La mía fue una clase de álgebra lineal donde entendí casi nada y quise, de inmediato, entenderlo todo. Pregunté en voz alta \"¿qué es un tensor?\". Nadie se rió (mucho).",
+    "tags": ["Álgebra lineal", "Curiosidad"],
+    "node": "muted",
+    "plate": {
+      "label": "[ foto: el campus, primer año ]",
+      "caption": "lámina I — antes del fine-tuning",
+      "image": null
+    }
+  }
+]

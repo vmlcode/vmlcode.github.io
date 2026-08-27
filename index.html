@@ -34,10 +34,14 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
 <script>
-  // Applied before first paint so the stored theme never flashes the wrong palette.
+  // Applied before first paint so the stored theme never flashes the wrong
+  // palette, and so the document is tagged with the right language from the
+  // start — the rest of the copy arrives with content/<lang>/*.json.
   try {
     var t = localStorage.getItem('vm-theme');
     if (t) document.documentElement.setAttribute('data-vm-theme', t);
+    var l = localStorage.getItem('vm-lang');
+    if (l === 'en' || l === 'es') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
 </script>
 </head>
@@ -47,13 +51,15 @@
   <div class="vm-prompt">
     <span id="prompt-user">victor</span>@<span id="night-word" class="vm-prompt-word">vmlcode</span><span class="vm-caret" aria-hidden="true"></span><span class="vm-prompt-tail">:~$ <span id="prompt-cmd" class="vm-cmd">./init.sh</span></span>
   </div>
-  <nav id="nav-links" class="vm-nav-links" aria-label="Sections"></nav>
+  <nav id="nav-links" class="vm-nav-links" aria-label="Sections"
+       data-i18n="home.navAria" data-i18n-attr="aria-label"></nav>
+  <div id="lang-toggle" class="vm-lang" role="group" data-i18n="langLabel" data-i18n-attr="aria-label" aria-label="Language"></div>
   <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
   <button id="nav-toggle" class="vm-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
 </header>
 
 <noscript>
-  <p class="vm-noscript">This site loads its content from JSON, so JavaScript is required. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
+  <p class="vm-noscript">This site loads its content from JSON, so JavaScript is required. / Este sitio carga su contenido desde JSON, así que requiere JavaScript. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
 </noscript>
 
 <main>

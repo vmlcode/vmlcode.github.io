@@ -27,9 +27,12 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
 <script>
+  // See index.html — theme and language are applied before first paint.
   try {
     var t = localStorage.getItem('vm-theme');
     if (t) document.documentElement.setAttribute('data-vm-theme', t);
+    var l = localStorage.getItem('vm-lang');
+    if (l === 'en' || l === 'es') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
 </script>
 </head>
@@ -40,14 +43,15 @@
     <div class="vm-prompt">
       <span class="vm-prompt-head">victor@vmlcode:~$ </span><span id="prompt-cmd" class="vm-cmd">cat</span><span class="vm-caret" aria-hidden="true"></span>
     </div>
-    <a class="vm-back" href="./blog.html">← The Night Shift</a>
+    <a class="vm-back" href="./blog.html" data-i18n="post.back">← The Night Shift</a>
+    <div id="lang-toggle" class="vm-lang" role="group" data-i18n="langLabel" data-i18n-attr="aria-label" aria-label="Language"></div>
     <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
   </header>
   <div class="vm-progress" role="presentation"><div id="progress-bar" class="vm-progress-bar"></div></div>
 </div>
 
 <noscript>
-  <p class="vm-noscript">This page loads its content from Markdown, so JavaScript is required. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
+  <p class="vm-noscript">This page loads its content from Markdown, so JavaScript is required. / Esta página carga su contenido desde Markdown, así que requiere JavaScript. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
 </noscript>
 
 <main>
@@ -73,25 +77,26 @@
          control only becomes interactive at phone width. -->
     <button id="toc-toggle" class="vm-art-side-key vm-toc-toggle" type="button"
             aria-expanded="true" aria-controls="toc">
-      <span>contents</span><span class="vm-toc-icon" aria-hidden="true">−</span>
+      <span data-i18n="post.contents">contents</span><span class="vm-toc-icon" aria-hidden="true">−</span>
     </button>
-    <nav id="toc" class="vm-toc-links" aria-label="Table of contents"></nav>
-    <div class="vm-art-side-note">written between<br>training runs<br>san cristóbal</div>
+    <nav id="toc" class="vm-toc-links" aria-label="Table of contents"
+         data-i18n="post.tocAria" data-i18n-attr="aria-label"></nav>
+    <div class="vm-art-side-note" data-i18n="post.sideNote">written between<br>training runs<br>san cristóbal</div>
   </aside>
 
   <article id="art-body" class="vm-art-body"></article>
 
   <aside class="vm-art-aside">
     <div>
-      <div class="vm-art-side-key">share</div>
+      <div class="vm-art-side-key" data-i18n="post.share">share</div>
       <div class="vm-art-share">
         <a id="share-x" href="#" target="_blank" rel="noopener">x ↗</a>
         <a id="share-in" href="#" target="_blank" rel="noopener">linkedin ↗</a>
-        <button id="copy-link" class="vm-copy" type="button">copy link</button>
+        <button id="copy-link" class="vm-copy" type="button" data-i18n="post.copy">copy link</button>
       </div>
     </div>
     <div class="vm-art-next">
-      <div class="vm-art-side-key">next entries</div>
+      <div class="vm-art-side-key" data-i18n="post.next">next entries</div>
       <div id="next-entries" class="vm-art-next-list"></div>
     </div>
   </aside>
@@ -101,7 +106,7 @@
 </main>
 
 <footer class="vm-footer vm-footer--ruled">
-  <div class="vm-footer-log">EOF · <a href="./blog.html">back to The Night Shift ←</a></div>
+  <div class="vm-footer-log">EOF · <a href="./blog.html" data-i18n="post.footerBack">back to The Night Shift ←</a></div>
   <div id="footer-links" class="vm-footer-links"></div>
 </footer>
 

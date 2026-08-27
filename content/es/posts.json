@@ -1,0 +1,118 @@
+[
+  {
+    "slug": "sarcasm-model-flagging-tweets",
+    "entry": "014",
+    "date": "2026-08-12",
+    "tag": "nlp",
+    "mins": 6,
+    "title": "Por qué mi modelo de sarcasmo marcaba mis propios tuits",
+    "teaser": "Una historia de depuración con una conclusión incómoda sobre mi personalidad en línea.",
+    "blurb": "Una historia de depuración con una conclusión incómoda.",
+    "stack": [
+      "PyTorch",
+      "Transformers",
+      "Diseño de datasets"
+    ],
+    "related": {
+      "label": "Sabor Analytics",
+      "href": "./index.html#work"
+    },
+    "url": "./post.html?p=sarcasm-model-flagging-tweets"
+  },
+  {
+    "slug": "quantization-slow-internet",
+    "entry": "013",
+    "date": "2026-07-28",
+    "tag": "edge",
+    "mins": 9,
+    "title": "Cuantización para gente con internet lento",
+    "teaser": "Todo lo que sé sobre encoger modelos, aprendido con ancho de banda venezolano.",
+    "blurb": "Encoger modelos, aprendido con ancho de banda venezolano.",
+    "stack": [
+      "TensorFlow Lite",
+      "Cuantización",
+      "Android"
+    ],
+    "related": {
+      "label": "AgroVision",
+      "href": "./index.html#work"
+    },
+    "url": "./post.html?p=quantization-slow-internet"
+  },
+  {
+    "slug": "teaching-python-60-engineers",
+    "entry": "012",
+    "date": "2026-07-03",
+    "tag": "docencia",
+    "mins": 4,
+    "title": "Notas de enseñarle Python a 60 ingenieros",
+    "teaser": "Qué fue lo que finalmente hizo clic con los bucles. Spoiler: hubo arepas.",
+    "blurb": "Qué hizo clic con los bucles. Hubo arepas de por medio.",
+    "stack": [
+      "Python",
+      "Docencia"
+    ],
+    "related": null,
+    "url": "./post.html?p=teaching-python-60-engineers"
+  },
+  {
+    "slug": "venezuelan-spanish-corpus",
+    "entry": "011",
+    "date": "2026-06-14",
+    "tag": "nlp",
+    "mins": 7,
+    "title": "Construir un corpus de español venezolano desde cero",
+    "teaser": "12 mil comentarios, tres desacuerdos de etiquetado por almuerzo familiar.",
+    "blurb": "12 mil comentarios, tres desacuerdos por almuerzo familiar.",
+    "stack": [
+      "spaCy",
+      "Anotación",
+      "Diseño de datasets"
+    ],
+    "related": {
+      "label": "Sabor Analytics",
+      "href": "./index.html#work"
+    },
+    "url": "./post.html?p=venezuelan-spanish-corpus"
+  },
+  {
+    "slug": "benchmarking-40-dollar-phone",
+    "entry": "010",
+    "date": "2026-05-30",
+    "tag": "edge",
+    "mins": 5,
+    "title": "Benchmarking en un teléfono de $40 (una carta de amor)",
+    "teaser": "El dispositivo que mantiene honestos a mis modelos.",
+    "blurb": "El dispositivo que mantiene honestos a mis modelos.",
+    "stack": [
+      "TensorFlow Lite",
+      "Profiling",
+      "Android"
+    ],
+    "related": {
+      "label": "AgroVision",
+      "href": "./index.html#work"
+    },
+    "url": "./post.html?p=benchmarking-40-dollar-phone"
+  },
+  {
+    "slug": "studyrag-notes-answer-back",
+    "entry": "009",
+    "date": "2026-05-02",
+    "tag": "estudio",
+    "mins": 8,
+    "title": "Mis apuntes ahora responden: lecciones de StudyRAG",
+    "teaser": "Sobre recuperación, citas y confiar en tu propia letra.",
+    "blurb": "Sobre recuperación, citas y confiar en tu propia letra.",
+    "stack": [
+      "LangChain",
+      "pgvector",
+      "Tesseract"
+    ],
+    "related": {
+      "label": "StudyRAG",
+      "href": "./index.html#work"
+    },
+    "url": "./post.html?p=studyrag-notes-answer-back"
+  }
+]

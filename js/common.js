@@ -10,14 +10,94 @@ export function esc(s) {
 
 export const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// ── language ─────────────────────────────────────────────────────────────
+// Every page ships in two locales. There is one content tree per language
+// (content/en, content/es), so the renderers stay monolingual: they read
+// whatever `loadContent` hands them and never branch on the active language.
+export const LANGS = ['en', 'es'];
+const LANG_KEY = 'vm-lang';
+
+/** ?lang= first (so a link can carry a language), then the stored choice,
+    then the browser's preference, then English. */
+export function readLang() {
+  const asked = new URLSearchParams(location.search).get('lang');
+  if (LANGS.includes(asked)) return asked;
+  try {
+    const stored = localStorage.getItem(LANG_KEY);
+    if (LANGS.includes(stored)) return stored;
+  } catch (e) {}
+  const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+  return LANGS.includes(nav) ? nav : 'en';
+}
+
+export const lang = readLang();
+document.documentElement.setAttribute('lang', lang);
+// A ?lang= link should keep its language when the visitor clicks through to
+// another page, so it is stored on arrival like any other choice.
+try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+
+/**
+ * Wires the EN/ES control. Switching reloads: the whole page — nav, hero,
+ * timeline, article body — comes from the content tree, so re-fetching it is
+ * both simpler and less error-prone than re-running every renderer by hand.
+ */
+export function initLang(el) {
+  if (!el) return;
+  el.innerHTML = LANGS.map((code) =>
+    `<button class="vm-lang-opt${code === lang ? ' is-active' : ''}" type="button"
+             data-lang="${code}" aria-pressed="${code === lang}"
+             lang="${code}">${code.toUpperCase()}</button>`
+  ).join('');
+
+  el.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-lang]');
+    if (!btn || btn.dataset.lang === lang) return;
+    const next = btn.dataset.lang;
+    try { localStorage.setItem(LANG_KEY, next); } catch (e) {}
+
+    // A ?lang= in the address bar outranks the stored choice, so it has to move
+    // with the click — otherwise the reload lands back on the old language.
+    const url = new URL(location.href);
+    if (url.searchParams.has('lang')) {
+      url.searchParams.set('lang', next);
+      location.href = url;
+    } else {
+      location.reload();
+    }
+  });
+}
+
+// ── strings ──────────────────────────────────────────────────────────────
+/** Fills `{name}` placeholders: t(ui.post.entry, { n: 3 }). */
+export function fmt(str, vars) {
+  return String(str == null ? '' : str).replace(/\{(\w+)\}/g, (m, k) =>
+    (vars && k in vars ? String(vars[k]) : m));
+}
+
+/**
+ * Copy that lives in the HTML rather than in a renderer — side labels, the
+ * noscript notice, back links. Each element names its key in `data-i18n`
+ * (dotted path into site.ui); `data-i18n-attr` targets an attribute instead.
+ */
+export function applyStatic(ui, root = document) {
+  root.querySelectorAll('[data-i18n]').forEach((el) => {
+    const value = el.dataset.i18n.split('.').reduce((o, k) => (o == null ? o : o[k]), ui);
+    if (value == null) return;
+    const attr = el.dataset.i18nAttr;
+    if (attr) el.setAttribute(attr, value);
+    else if (String(value).includes('\n')) el.innerHTML = esc(value).replace(/\n/g, '<br>');
+    else el.textContent = value;
+  });
+}
+
 /**
  * Load one or more JSON files from /content. Paths are relative to the page,
  * so this works identically at a domain root and in a project subpath.
  */
 export async function loadContent(...names) {
   const results = await Promise.all(names.map(async (name) => {
-    const res = await fetch(`./content/${name}.json`, { cache: 'no-cache' });
-    if (!res.ok) throw new Error(`content/${name}.json → HTTP ${res.status}`);
+    const res = await fetch(`./content/${lang}/${name}.json`, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`content/${lang}/${name}.json → HTTP ${res.status}`);
     return res.json();
   }));
   return results.length === 1 ? results[0] : results;
@@ -28,17 +108,24 @@ export function contentError(target, err) {
   console.error(err);
   const el = typeof target === 'string' ? document.querySelector(target) : target;
   if (!el) return;
-  el.innerHTML =
-    '<p class="vm-error">Could not load content. If you opened this file directly, ' +
-    'serve it over HTTP instead — <code>python3 -m http.server</code>.</p>';
+  // The message cannot come from content/: content is exactly what failed.
+  const msg = lang === 'es'
+    ? 'No se pudo cargar el contenido. Si abriste el archivo directamente, ' +
+      'sírvelo por HTTP — <code>python3 -m http.server</code>.'
+    : 'Could not load content. If you opened this file directly, ' +
+      'serve it over HTTP instead — <code>python3 -m http.server</code>.';
+  el.innerHTML = `<p class="vm-error">${msg}</p>`;
 }
 
 // ── theme ────────────────────────────────────────────────────────────────
 // The stored theme is applied pre-paint by an inline script in each page's
 // <head>; this only wires up the toggle and keeps its label in sync.
-export function initTheme(btn) {
+export function initTheme(btn, labels) {
   if (!btn) return;
   const root = document.documentElement;
+  // Called before content loads on a failed fetch, so the labels are optional.
+  const words = labels || { dark: 'night shift', light: 'day shift' };
+  if (words.aria) btn.setAttribute('aria-label', words.aria);
 
   const paint = () => {
     const dark = root.getAttribute('data-vm-theme') !== 'light';
@@ -46,7 +133,7 @@ export function initTheme(btn) {
     // width, where the design calls for an icon-only control.
     btn.innerHTML =
       `<span class="vm-theme-icon">${dark ? '☾' : '☀'}</span>` +
-      `<span class="vm-theme-label">${dark ? 'night shift' : 'day shift'}</span>`;
+      `<span class="vm-theme-label">${dark ? esc(words.dark) : esc(words.light)}</span>`;
     btn.setAttribute('aria-pressed', String(!dark));
   };
 

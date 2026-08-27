@@ -1,6 +1,7 @@
 /* Blog index — "The Night Shift". Posts and copy come from /content/*.json. */
 import {
-  esc, loadContent, contentError, initTheme, renderFooterLinks, renderStars
+  esc, loadContent, contentError, initTheme, initLang, applyStatic,
+  renderFooterLinks, renderStars
 } from './common.js';
 
 const $ = (sel) => document.querySelector(sel);
@@ -13,11 +14,17 @@ const STARS = [
   { x: 75, y: 30, dur: 4.4, delay: 1.8 }
 ];
 
-initTheme($('#theme-toggle'));
+initLang($('#lang-toggle'));
+
+let ui = null;
 
 try {
   const [site, posts] = await loadContent('site', 'posts');
   const meta = site.blogPage;
+
+  ui = site.ui;
+  initTheme($('#theme-toggle'), ui.theme);
+  applyStatic(ui);
 
   // Newest first, whatever order the JSON happens to be in.
   posts.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
@@ -25,10 +32,12 @@ try {
   renderShell(site, meta, posts);
   initFilters(meta, posts);
 } catch (err) {
+  initTheme($('#theme-toggle'));
   contentError('#post-list', err);
 }
 
 function renderShell(site, meta, posts) {
+  document.title = meta.docTitle;
   $('#prompt-user').textContent = site.handle;
   $('#prompt-cmd').textContent = meta.command;
   $('#back-link').textContent = meta.backLabel;
@@ -61,22 +70,22 @@ function initFilters(meta, posts) {
     filterBar.innerHTML = tags.map((t) => `
       <button class="vm-filter${t === active ? ' is-active' : ''}" type="button"
               data-tag="${esc(t)}" aria-pressed="${t === active}">
-        ${t === 'all' ? 'all' : '#' + esc(t)}
+        ${t === 'all' ? esc(ui.blog.filterAll) : '#' + esc(t)}
       </button>`).join('');
   };
 
   const paintPosts = () => {
     const shown = active === 'all' ? posts : posts.filter((p) => p.tag === active);
     if (!shown.length) {
-      list.innerHTML = '<p class="vm-empty">No entries under that tag yet.</p>';
+      list.innerHTML = `<p class="vm-empty">${esc(ui.blog.empty)}</p>`;
       return;
     }
     list.innerHTML = shown.map((p) => `
       <article class="vm-entry">
         <div class="vm-entry-meta">
-          <span>obs. ${esc(p.date)}</span>
+          <span>${esc(ui.blog.obs)} ${esc(p.date)}</span>
           <span class="vm-post-tag">#${esc(p.tag)}</span>
-          <span>${esc(p.mins)} min</span>
+          <span>${esc(p.mins)} ${esc(ui.blog.mins)}</span>
         </div>
         <h2 class="vm-entry-title"><a href="${esc(p.url || '#')}">${esc(p.title)}</a></h2>
         <p class="vm-entry-teaser">${esc(p.teaser)}</p>

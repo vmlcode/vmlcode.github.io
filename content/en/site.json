@@ -76,7 +76,8 @@
     "titleLead": "The ",
     "titleAccent": "Night Shift",
     "subtitle": "Everything I learn, written down while the models train. Some findings replicate.",
-    "outroLink": "back home ←"
+    "outroLink": "back home ←",
+    "docTitle": "The Night Shift — Victor Maldonado"
   },
   "footer": {
     "log": "[04:12] session end · exit code 0 · reachable most nights",
@@ -99,5 +100,67 @@
         "href": "#"
       }
     ]
-  }
+  },
+  "ui": {
+    "langLabel": "Language",
+    "theme": {
+      "aria": "Toggle colour theme",
+      "dark": "night shift",
+      "light": "day shift"
+    },
+    "home": {
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu",
+      "hideShots": "− hide",
+      "showShot": "+ {n} photo",
+      "showShots": "+ {n} photos",
+      "skillLevel": "{n} of 5",
+      "recordAria": "{name} record",
+      "recordClose": "× close record",
+      "recordKicker": "record {id}",
+      "specRole": "role",
+      "specYear": "year",
+      "specMetric": "metric",
+      "lesson": "what I learned",
+      "live": "open live demo ↗",
+      "source": "source on github ↗",
+      "openRecord": "open_record",
+      "closeRecord": "close_record",
+      "rowLive": "live",
+      "rowSource": "github",
+      "obs": "obs.",
+      "navAria": "Sections"
+    },
+    "blog": {
+      "filterAll": "all",
+      "filterAria": "Filter posts by tag",
+      "empty": "No entries under that tag yet.",
+      "obs": "obs.",
+      "mins": "min"
+    },
+    "post": {
+      "titleSuffix": "The Night Shift",
+      "back": "← The Night Shift",
+      "obs": "obs.",
+      "mins": "min",
+      "entry": "entry {n}",
+      "contents": "contents",
+      "tocAria": "Table of contents",
+      "sideNote": "written between\ntraining runs\nsan cristóbal",
+      "share": "share",
+      "copy": "copy link",
+      "copied": "copied ✓",
+      "copyFailed": "copy failed",
+      "next": "next entries",
+      "relatedLead": "This entry is about ",
+      "relatedTail": " — the full project record lives in the catalogue on the main page.",
+      "footerBack": "back to The Night Shift ←",
+      "notFoundDoc": "Entry not found",
+      "notFoundTitle": "No entry under that name",
+      "notFoundTeaser": "Nothing in the journal matches “{slug}”.",
+      "notFoundNoSlug": "No entry was requested.",
+      "notFoundBody": "The entry may have been renamed. Everything published so far:"
+    }
+  },
+  "docTitle": "Victor Maldonado — AI/ML Engineer"
 }

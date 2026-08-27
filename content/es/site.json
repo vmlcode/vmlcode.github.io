@@ -1,0 +1,166 @@
+{
+  "name": "Victor Maldonado",
+  "handle": "victor",
+  "hero": {
+    "promptWords": [
+      "vmlcode",
+      "vision-por-computadora",
+      "pytorch",
+      "nlp",
+      "edge-ai",
+      "deep-learning",
+      "python",
+      "datos"
+    ],
+    "command": "./init.sh",
+    "roles": [
+      "ingeniero de IA/ML",
+      "desarrollador backend",
+      "desarrollador full-stack",
+      "domador de datos"
+    ],
+    "intro": "Desarrollo sistemas de IA que aprenden de los datos, y construyo la infraestructura para que funcionen en producción.",
+    "sessionLog": [
+      {
+        "text": "[22:41] inicio de sesión · 7.7669° N, 72.2250° W · Bogotá · visibilidad: excelente",
+        "accent": true
+      },
+      {
+        "text": "[22:41] época 07 · loss 0.041 ↓ · estado: todavía aprendiendo · sobreajuste: solo al café"
+      }
+    ]
+  },
+  "nav": [
+    {
+      "label": "α Experiencia",
+      "href": "#experience"
+    },
+    {
+      "label": "β Proyectos",
+      "href": "#work"
+    },
+    {
+      "label": "γ Blog",
+      "href": "./blog.html"
+    },
+    {
+      "label": "ε Stack",
+      "href": "#instrumentation"
+    },
+    {
+      "label": "δ Contacto",
+      "href": "#contact"
+    }
+  ],
+  "sections": {
+    "experience": {
+      "eyebrow": "α — bitácora de expedición · git log --follow victor"
+    },
+    "work": {
+      "eyebrow": "β — catálogo · checkpoints que sobrevivieron a la validación"
+    },
+    "instrumentation": {
+      "eyebrow": "ε — instrumentación · tecnologías y certificaciones",
+      "skillsNote": "calibrado contra proyectos reales",
+      "certsLabel": "// certificados — firmados y verificados"
+    },
+    "blog": {
+      "eyebrow": "γ — Publicaciones",
+      "linkLabel": "leer el turno de noche ↗"
+    }
+  },
+  "blogPage": {
+    "command": "cat /blog",
+    "backLabel": "← Inicio",
+    "kicker": "diario de observación · {count} entradas · actualizado casi cada semana",
+    "titleLead": "El ",
+    "titleAccent": "Turno de Noche",
+    "subtitle": "Todo lo que aprendo, escrito mientras los modelos entrenan. Algunos hallazgos se replican.",
+    "outroLink": "volver al inicio ←",
+    "docTitle": "El Turno de Noche — Victor Maldonado"
+  },
+  "footer": {
+    "log": "[04:12] fin de sesión · código de salida 0 · disponible casi todas las noches",
+    "blogLog": "sindicado en ningún lado · rss algún día",
+    "links": [
+      {
+        "label": "github ↗",
+        "href": "#"
+      },
+      {
+        "label": "linkedin ↗",
+        "href": "#"
+      },
+      {
+        "label": "x ↗",
+        "href": "#"
+      },
+      {
+        "label": "mail ↗",
+        "href": "#"
+      }
+    ]
+  },
+  "ui": {
+    "langLabel": "Idioma",
+    "theme": {
+      "aria": "Cambiar el tema de color",
+      "dark": "turno de noche",
+      "light": "turno de día"
+    },
+    "home": {
+      "menuOpen": "Abrir menú",
+      "menuClose": "Cerrar menú",
+      "hideShots": "− ocultar",
+      "showShot": "+ {n} foto",
+      "showShots": "+ {n} fotos",
+      "skillLevel": "{n} de 5",
+      "recordAria": "ficha de {name}",
+      "recordClose": "× cerrar ficha",
+      "recordKicker": "ficha {id}",
+      "specRole": "rol",
+      "specYear": "año",
+      "specMetric": "métrica",
+      "lesson": "lo que aprendí",
+      "live": "ver demo en vivo ↗",
+      "source": "código en github ↗",
+      "openRecord": "abrir_ficha",
+      "closeRecord": "cerrar_ficha",
+      "rowLive": "demo",
+      "rowSource": "github",
+      "obs": "obs.",
+      "navAria": "Secciones"
+    },
+    "blog": {
+      "filterAll": "todas",
+      "filterAria": "Filtrar entradas por etiqueta",
+      "empty": "Todavía no hay entradas con esa etiqueta.",
+      "obs": "obs.",
+      "mins": "min"
+    },
+    "post": {
+      "titleSuffix": "El Turno de Noche",
+      "back": "← El Turno de Noche",
+      "obs": "obs.",
+      "mins": "min",
+      "entry": "entrada {n}",
+      "contents": "contenido",
+      "tocAria": "Tabla de contenido",
+      "sideNote": "escrito entre\nentrenamientos\nsan cristóbal",
+      "share": "compartir",
+      "copy": "copiar enlace",
+      "copied": "copiado ✓",
+      "copyFailed": "no se pudo copiar",
+      "next": "siguientes entradas",
+      "relatedLead": "Esta entrada trata sobre ",
+      "relatedTail": " — la ficha completa del proyecto está en el catálogo de la página principal.",
+      "footerBack": "volver a El Turno de Noche ←",
+      "notFoundDoc": "Entrada no encontrada",
+      "notFoundTitle": "No hay ninguna entrada con ese nombre",
+      "notFoundTeaser": "Nada en el diario coincide con “{slug}”.",
+      "notFoundNoSlug": "No se pidió ninguna entrada.",
+      "notFoundBody": "Puede que la entrada haya cambiado de nombre. Todo lo publicado hasta ahora:"
+    }
+  },
+  "docTitle": "Victor Maldonado — Ingeniero de IA/ML"
+}

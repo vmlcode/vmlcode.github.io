@@ -15,8 +15,8 @@ js/home.js          home page rendering
 js/blog.js          blog index rendering + tag filter
 js/post.js          article rendering, reading progress, TOC, share
 js/markdown.js      small Markdown subset parser (~2KB)
-content/*.json      all editable content (see below)
-content/posts/*.md  the articles themselves
+content/<lang>/     all editable content, one tree per language (see below)
+content/images/     shared images, referenced from any language
 og/                 social-card sources + build script
 ```
 
@@ -26,21 +26,49 @@ Compiled by hand from the Claude Design components `Portfolio Site.dc.html` and
 they were replaced with real DOM rendering, CSS `:hover` rules and responsive
 breakpoints — the source was authored at a fixed 1180px preview width.
 
+## Languages
+
+The site ships in English and Spanish. Each language is a complete content tree:
+
+```
+content/en/*.json  content/en/posts/*.md
+content/es/*.json  content/es/posts/*.md
+content/images/    shared by both
+```
+
+The renderers never branch on language — they read whatever
+`loadContent()` hands them, and it always loads from `content/<lang>/`. Both
+trees must therefore carry the **same keys** and the same post slugs; only the
+copy differs.
+
+The active language is chosen in this order: `?lang=en|es` in the URL, then the
+visitor's stored choice, then the browser's preference, then English. The EN/ES
+control in the header stores the choice and reloads. A `?lang=` link is stored
+on arrival, so it survives a click through to another page.
+
+Interface strings that are not editorial — button labels, "contents", the 404
+copy — live under `ui` in each `site.json`. Renderers read them from there;
+copy that sits in the HTML instead names its key with `data-i18n="post.share"`
+(add `data-i18n-attr` to target an attribute rather than the text).
+
 ## Editing content
 
 Everything editorial is JSON; you should not need to touch HTML or JS to update
-the site.
+the site. Paths below are relative to `content/<lang>/`.
 
 | File | Holds |
 |---|---|
-| `content/site.json` | Name, hero copy, session log, nav, section headings, blog-page copy, footer + social links |
-| `content/experience.json` | Timeline entries (the "expeditions") |
-| `content/projects.json` | Work catalogue records — problem, approach, lesson, stack, links |
-| `content/skills.json` | Skill name + `level` 1–5 (drives the tick meters) |
-| `content/certificates.json` | Certificate name, issuer, year |
-| `content/posts.json` | Blog posts, shared by both pages |
+| `site.json` | Name, hero copy, session log, nav, section headings, blog-page copy, footer + social links, and the `ui` interface strings |
+| `experience.json` | Timeline entries (the "expeditions") |
+| `projects.json` | Work catalogue records — problem, approach, lesson, stack, links |
+| `skills.json` | Skill name + `level` 1–5 (drives the tick meters) |
+| `certificates.json` | Certificate name, issuer, year |
+| `posts.json` | Blog posts, shared by both pages |
 
 Notes:
+
+- **Edit both trees.** A key present in one language and missing in the other
+  renders as `undefined` in the language that lacks it.
 
 - **Posts** are sorted newest-first by `date` at runtime, so order in the file
   doesn't matter. The home page shows the newest three. Blog filter tags are
@@ -52,9 +80,11 @@ Notes:
 
 Two steps:
 
-1. Add `content/posts/<slug>.md` with the body.
-2. Add an entry to `content/posts.json` whose `slug` matches the filename, and
-   set `"url": "./post.html?p=<slug>"`.
+1. Add `content/en/posts/<slug>.md` and `content/es/posts/<slug>.md` with the
+   body. **The slug is shared** — it is what keeps the two versions of an
+   article linked, so it stays in English in both trees.
+2. Add an entry to both `content/en/posts.json` and `content/es/posts.json`
+   whose `slug` matches the filename, and set `"url": "./post.html?p=<slug>"`.
 
 Every article is served by `post.html`, which reads `?p=<slug>`. The supported
 Markdown is deliberately narrow — `js/markdown.js` handles exactly this and

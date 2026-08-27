@@ -1,0 +1,53 @@
+[
+  {
+    "id": "VM-001 · ckpt_01.pt",
+    "name": "Sabor Analytics",
+    "blurb": "NLP · magnitud 82% de recall en sarcasmo",
+    "role": "En solitario — datos, modelo, interfaz",
+    "year": "2026",
+    "metric": "82% de recall en sarcasmo",
+    "problem": "Los modelos de sentimiento en español que vienen listos leen el habla venezolana como neutra o, peor, como hostil. La ironía regional, los diminutivos y la jerga quedan fuera de su distribución de entrenamiento — así que un comentario cariñoso termina puntuado como un insulto.",
+    "approach": "Recolecté y etiqueté a mano 12 mil comentarios regionales, ajusté un transformer multilingüe sobre ellos y le agregué una cabeza de sarcasmo entrenada con un subconjunto más pequeño y deliberadamente adversarial. La demo muestra la confianza del modelo token por token, para que se vea exactamente dónde cambia de opinión.",
+    "lesson": "Etiquetar mi propio idioma me enseñó más sobre los datos que cualquier decisión de arquitectura.",
+    "stack": ["PyTorch", "Transformers", "spaCy", "FastAPI"],
+    "shot": {
+      "label": "[ captura: panel de sentimiento ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  },
+  {
+    "id": "VM-002 · ckpt_02.tflite",
+    "name": "AgroVision",
+    "blurb": "visión en el borde · visible desde un teléfono de $40",
+    "role": "Modelo + integración móvil",
+    "year": "2025",
+    "metric": "11 MB · 94% top-1",
+    "problem": "Los caficultores cerca de San Cristóbal pierden cosechas por una roya que se vuelve evidente tres semanas tarde. La inferencia en la nube no es opción: en los campos no hay señal y los teléfonos son Android de gama de entrada.",
+    "approach": "Un clasificador de la familia MobileNet entrenado con un dataset recogido en campo, podado y cuantizado a int8 hasta correr totalmente offline en menos de 400 ms en un equipo de $40. La app guarda los diagnósticos localmente y sincroniza cuando el productor vuelve al pueblo.",
+    "lesson": "Las restricciones son un brief de diseño. El límite de 11 MB hizo el modelo mejor, no solo más pequeño.",
+    "stack": ["TensorFlow Lite", "OpenCV", "Android", "Cuantización"],
+    "shot": {
+      "label": "[ foto: la app en un cafetal ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  },
+  {
+    "id": "VM-003 · ckpt_03.idx",
+    "name": "StudyRAG",
+    "blurb": "LLMs · recuperación sobre mis propios apuntes",
+    "role": "En solitario — recuperación + interfaz",
+    "year": "2025",
+    "metric": "4 semestres indexados",
+    "problem": "Cuatro semestres de apuntes a mano y a medio tipear, ninguno buscable, todos necesarios la noche antes de un examen.",
+    "approach": "OCR hacia un corpus limpio, troceado y embebido en un índice vectorial, con una capa de recuperación que siempre cita la página de origen. Responde con las palabras de mis propios apuntes — incluidos mis propios errores, lo que resultó ser una función de estudio bastante útil.",
+    "lesson": "Un sistema de recuperación es tan honesto como sus citas. Mostrar las fuentes arregló mi confianza en él.",
+    "stack": ["LangChain", "FastAPI", "pgvector", "Tesseract"],
+    "shot": {
+      "label": "[ captura: chat sobre apuntes de clase ]",
+      "image": null
+    },
+    "links": { "live": "#", "source": "#" }
+  }
+]

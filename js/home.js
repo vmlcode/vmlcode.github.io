@@ -1,7 +1,7 @@
 /* Home page. All copy comes from /content/*.json. */
 import {
-  esc, loadContent, contentError, initTheme, typer, initReveal,
-  renderFooterLinks, renderStars, plateHTML
+  esc, fmt, loadContent, contentError, initTheme, initLang, applyStatic,
+  typer, initReveal, renderFooterLinks, renderStars, plateHTML
 } from './common.js';
 
 const $ = (sel) => document.querySelector(sel);
@@ -18,11 +18,19 @@ const STARS = [
   { x: 37, y: 40, dur: 3.8, delay: 1.7 }
 ];
 
-initTheme($('#theme-toggle'));
+initLang($('#lang-toggle'));
+
+// Every user-facing string on this page comes from the active locale's content
+// tree, so nothing renders — not even the chrome — until it has loaded.
+let ui = null;
 
 try {
   const [site, experience, projects, skills, certs, posts] =
     await loadContent('site', 'experience', 'projects', 'skills', 'certificates', 'posts');
+
+  ui = site.ui;
+  initTheme($('#theme-toggle'), ui.theme);
+  applyStatic(ui);
 
   renderShell(site);
   renderHero(site);
@@ -35,6 +43,7 @@ try {
   initNavSpy();
   initNavToggle();
 } catch (err) {
+  initTheme($('#theme-toggle'));
   contentError('main', err);
 }
 
@@ -49,7 +58,7 @@ function initNavToggle() {
   const setOpen = (open) => {
     nav.classList.toggle('is-nav-open', open);
     btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    btn.setAttribute('aria-label', open ? ui.home.menuClose : ui.home.menuOpen);
     btn.textContent = open ? '✕' : '☰';
   };
 
@@ -68,6 +77,7 @@ function initNavToggle() {
 
 // ── shell ────────────────────────────────────────────────────────────────
 function renderShell(site) {
+  document.title = site.docTitle;
   $('#prompt-user').textContent = site.handle;
   $('#prompt-cmd').textContent = site.hero.command;
 
@@ -120,7 +130,9 @@ function projectHTML(p, key, open) {
     ? `<button class="vm-project-toggle" type="button" data-shots="${esc(key)}"
                aria-expanded="${isOpen}" aria-controls="shots-${esc(key)}">
          <span class="vm-project-name">${esc(p.name)}</span>
-         <span class="vm-project-hint">${isOpen ? '− hide' : `+ ${shots.length} photo${shots.length > 1 ? 's' : ''}`}</span>
+         <span class="vm-project-hint">${esc(isOpen
+             ? ui.home.hideShots
+             : fmt(shots.length > 1 ? ui.home.showShots : ui.home.showShot, { n: shots.length }))}</span>
        </button>`
     : `<h4 class="vm-project-name">${esc(p.name)}</h4>`;
 
@@ -219,31 +231,32 @@ function renderCatalogue(site, projects) {
     </div>`;
 
   const record = (p, idx) => `
-    <div class="vm-record" id="record-${idx}" role="region" aria-label="${esc(p.name)} record">
-      <button class="vm-record-close" type="button" data-close="${idx}">× close record</button>
+    <div class="vm-record" id="record-${idx}" role="region"
+         aria-label="${esc(fmt(ui.home.recordAria, { name: p.name }))}">
+      <button class="vm-record-close" type="button" data-close="${idx}">${esc(ui.home.recordClose)}</button>
       <div class="vm-record-grid">
         <div>
           ${plateHTML(p.shot, 'vm-record-plate')}
           <div class="vm-specs">
-            ${spec('role', p.role, false)}
-            ${spec('year', p.year, false)}
-            ${spec('metric', p.metric, true)}
+            ${spec(ui.home.specRole, p.role, false)}
+            ${spec(ui.home.specYear, p.year, false)}
+            ${spec(ui.home.specMetric, p.metric, true)}
           </div>
           <div class="vm-tags">${p.stack.map((t) => `<span class="vm-tag">${esc(t)}</span>`).join('')}</div>
         </div>
         <div class="vm-record-body">
-          <div class="vm-record-kicker">record ${esc(p.id)}</div>
+          <div class="vm-record-kicker">${esc(fmt(ui.home.recordKicker, { id: p.id }))}</div>
           <h3 class="vm-record-title">${esc(p.name)}</h3>
           <div class="vm-record-rule"></div>
           <p class="vm-record-p">${esc(p.problem)}</p>
           <p class="vm-record-p">${esc(p.approach)}</p>
           <div class="vm-lesson">
-            <div class="vm-lesson-key">what I learned</div>
+            <div class="vm-lesson-key">${esc(ui.home.lesson)}</div>
             <div class="vm-lesson-txt">${esc(p.lesson)}</div>
           </div>
           <div class="vm-record-actions">
-            <a class="vm-link-btn" href="${esc(p.links.live)}">open live demo ↗</a>
-            <a class="vm-link-btn vm-link-btn--muted" href="${esc(p.links.source)}">source on github ↗</a>
+            <a class="vm-link-btn" href="${esc(p.links.live)}">${esc(ui.home.live)}</a>
+            <a class="vm-link-btn vm-link-btn--muted" href="${esc(p.links.source)}">${esc(ui.home.source)}</a>
           </div>
         </div>
       </div>
@@ -261,8 +274,8 @@ function renderCatalogue(site, projects) {
             <span class="vm-row-blurb">${esc(p.blurb)}</span>
           </span>
           <span class="vm-row-cta">
-            <span>&gt; ${open ? 'close_record' : 'open_record'}</span>
-            <span>&gt; live</span><span>&gt; github</span>
+            <span>&gt; ${esc(open ? ui.home.closeRecord : ui.home.openRecord)}</span>
+            <span>&gt; ${esc(ui.home.rowLive)}</span><span>&gt; ${esc(ui.home.rowSource)}</span>
           </span>
         </button>
         ${open ? record(p, idx) : ''}`;
@@ -299,7 +312,7 @@ function renderInstrumentation(site, skills, certs) {
     return `
       <div class="vm-skill">
         <span class="vm-skill-name">${esc(s.name)}</span>
-        <div class="vm-ticks" role="img" aria-label="${s.level} of 5">${ticks}</div>
+        <div class="vm-ticks" role="img" aria-label="${esc(fmt(ui.home.skillLevel, { n: s.level }))}">${ticks}</div>
       </div>`;
   }).join('');
 
@@ -324,7 +337,7 @@ function renderBlogTeaser(site, posts) {
   $('#posts').innerHTML = posts.slice(0, 3).map((p) => `
     <article class="vm-post">
       <div class="vm-post-meta">
-        <span>obs. ${esc(p.date)}</span>
+        <span>${esc(ui.home.obs)} ${esc(p.date)}</span>
         <span class="vm-post-tag">#${esc(p.tag)}</span>
       </div>
       <h3 class="vm-post-title"><a href="${esc(p.url)}">${esc(p.title)}</a></h3>

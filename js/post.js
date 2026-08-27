@@ -1,14 +1,24 @@
 /* Single article. The post is chosen by ?p=<slug>; metadata comes from
    content/posts.json and the body from content/posts/<slug>.md. */
-import { esc, loadContent, contentError, initTheme, renderFooterLinks } from './common.js';
+import {
+  esc, fmt, lang, loadContent, contentError, initTheme, initLang, applyStatic,
+  renderFooterLinks
+} from './common.js';
 import { renderMarkdown } from './markdown.js';
 
 const $ = (sel) => document.querySelector(sel);
 
-initTheme($('#theme-toggle'));
+initLang($('#lang-toggle'));
+
+let ui = null;
 
 try {
   const [site, posts] = await loadContent('site', 'posts');
+
+  ui = site.ui;
+  initTheme($('#theme-toggle'), ui.theme);
+  applyStatic(ui);
+
   posts.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
   const slug = new URLSearchParams(location.search).get('p');
@@ -25,33 +35,34 @@ try {
     initTocToggle();
   }
 } catch (err) {
+  initTheme($('#theme-toggle'));
   contentError('#art-body', err);
 }
 
 // ── article ──────────────────────────────────────────────────────────────
 async function renderPost(post, posts) {
-  document.title = `${post.title} — The Night Shift`;
+  document.title = `${post.title} — ${ui.post.titleSuffix}`;
   $('#prompt-cmd').textContent = `cat obs_${post.date}.md`;
 
   $('#art-meta').innerHTML = [
-    `<span class="vm-acc-txt">obs. ${esc(post.date)}</span>`,
+    `<span class="vm-acc-txt">${esc(ui.post.obs)} ${esc(post.date)}</span>`,
     `<span>#${esc(post.tag)}</span>`,
-    `<span>${esc(post.mins)} min</span>`,
-    `<span>entry ${esc(post.entry)}</span>`
+    `<span>${esc(post.mins)} ${esc(ui.post.mins)}</span>`,
+    `<span>${esc(fmt(ui.post.entry, { n: post.entry }))}</span>`
   ].join('');
   $('#art-title').textContent = post.title;
   $('#art-teaser').textContent = post.teaser;
 
-  const res = await fetch(`./content/posts/${post.slug}.md`, { cache: 'no-cache' });
-  if (!res.ok) throw new Error(`content/posts/${post.slug}.md → HTTP ${res.status}`);
+  const res = await fetch(`./content/${lang}/posts/${post.slug}.md`, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`content/${lang}/posts/${post.slug}.md → HTTP ${res.status}`);
   const { html, toc } = renderMarkdown(await res.text());
 
   const tags = (post.stack || [])
     .map((t) => `<span class="vm-tag">${esc(t)}</span>`).join('');
   const related = post.related
-    ? `<div class="vm-art-related">This entry is about ` +
-      `<a href="${esc(post.related.href)}">${esc(post.related.label)}</a> — ` +
-      `the full project record lives in the catalogue on the main page.</div>`
+    ? `<div class="vm-art-related">${esc(ui.post.relatedLead)}` +
+      `<a href="${esc(post.related.href)}">${esc(post.related.label)}</a>` +
+      `${esc(ui.post.relatedTail)}</div>`
     : '';
 
   $('#art-body').innerHTML = `${html}<div class="vm-tags vm-art-tags">${tags}</div>${related}`;
@@ -66,7 +77,7 @@ async function renderPost(post, posts) {
 
 function renderShare(post) {
   const url = location.href;
-  const text = `${post.title} — The Night Shift`;
+  const text = `${post.title} — ${ui.post.titleSuffix}`;
   $('#share-x').href =
     `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
   $('#share-in').href =
@@ -76,11 +87,11 @@ function renderShare(post) {
     const btn = ev.currentTarget;
     try {
       await navigator.clipboard.writeText(url);
-      btn.textContent = 'copied ✓';
+      btn.textContent = ui.post.copied;
     } catch {
-      btn.textContent = 'copy failed';
+      btn.textContent = ui.post.copyFailed;
     }
-    setTimeout(() => { btn.textContent = 'copy link'; }, 1800);
+    setTimeout(() => { btn.textContent = ui.post.copy; }, 1800);
   });
 }
 
@@ -92,14 +103,14 @@ function renderNext(post, posts) {
 }
 
 function notFound(slug, posts) {
-  document.title = 'Entry not found — The Night Shift';
+  document.title = `${ui.post.notFoundDoc} — ${ui.post.titleSuffix}`;
   $('#art-meta').innerHTML = '<span>404</span>';
-  $('#art-title').textContent = 'No entry under that name';
+  $('#art-title').textContent = ui.post.notFoundTitle;
   $('#art-teaser').textContent = slug
-    ? `Nothing in the journal matches “${slug}”.`
-    : 'No entry was requested.';
+    ? fmt(ui.post.notFoundTeaser, { slug })
+    : ui.post.notFoundNoSlug;
   $('#art-body').innerHTML =
-    '<p>The entry may have been renamed. Everything published so far:</p>' +
+    `<p>${esc(ui.post.notFoundBody)}</p>` +
     '<ul class="vm-art-list">' +
     posts.map((p) => `<li><a href="${esc(p.url)}">${esc(p.title)}</a></li>`).join('') +
     '</ul>';

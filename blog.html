@@ -33,9 +33,12 @@
 <link rel="stylesheet" href="./styles.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
 <script>
+  // See index.html — theme and language are applied before first paint.
   try {
     var t = localStorage.getItem('vm-theme');
     if (t) document.documentElement.setAttribute('data-vm-theme', t);
+    var l = localStorage.getItem('vm-lang');
+    if (l === 'en' || l === 'es') document.documentElement.setAttribute('lang', l);
   } catch (e) {}
 </script>
 </head>
@@ -46,11 +49,12 @@
     <span class="vm-prompt-head"><span id="prompt-user">victor</span>@vmlcode:~$ </span><span id="prompt-cmd" class="vm-cmd">cat /blog</span><span class="vm-caret" aria-hidden="true"></span>
   </div>
   <a id="back-link" class="vm-back" href="./index.html">← Home</a>
+  <div id="lang-toggle" class="vm-lang" role="group" data-i18n="langLabel" data-i18n-attr="aria-label" aria-label="Language"></div>
   <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
 </header>
 
 <noscript>
-  <p class="vm-noscript">This page loads its posts from JSON, so JavaScript is required. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
+  <p class="vm-noscript">This page loads its posts from JSON, so JavaScript is required. / Esta página carga sus entradas desde JSON, así que requiere JavaScript. Source: <a href="https://github.com/vmlcode/vmlcode.github.io">github.com/vmlcode/vmlcode.github.io</a></p>
 </noscript>
 
 <main>
@@ -60,7 +64,8 @@
   <div id="blog-kicker" class="vm-blog-kicker"></div>
   <h1 id="blog-title" class="vm-blog-title"></h1>
   <p id="blog-subtitle" class="vm-blog-sub"></p>
-  <div id="filters" class="vm-filters" role="group" aria-label="Filter posts by tag"></div>
+  <div id="filters" class="vm-filters" role="group" aria-label="Filter posts by tag"
+       data-i18n="blog.filterAria" data-i18n-attr="aria-label"></div>
 </section>
 
 <section class="vm-blog-body">

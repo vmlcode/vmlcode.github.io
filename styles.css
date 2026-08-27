@@ -203,6 +203,32 @@ figure { margin: 0; }
 }
 .vm-theme-btn:hover { background: var(--vm-hover); }
 
+/* Language switch: a two-segment control, so the alternative is always visible
+   rather than hidden behind a click like a single cycling button. */
+.vm-lang {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--vm-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.vm-lang-opt {
+  cursor: pointer;
+  font: 11.5px var(--font-mono);
+  letter-spacing: .04em;
+  color: var(--vm-fg-45);
+  background: transparent;
+  border: 0;
+  padding: 6px 9px;
+  transition: color .3s ease, background .3s ease;
+}
+.vm-lang-opt + .vm-lang-opt { border-left: 1px solid var(--vm-line); }
+.vm-lang-opt:hover { color: var(--vm-fg); background: var(--vm-hover); }
+.vm-lang-opt.is-active {
+  color: var(--vm-acc-txt);
+  background: var(--vm-hover);
+}
+
 /* Collapsed-nav control: phone only. Hidden here so desktop is untouched. */
 .vm-nav-toggle {
   display: none;
@@ -961,6 +987,8 @@ figure { margin: 0; }
 
   .vm-theme-btn { font-size: 11px; padding: 7px 10px; min-height: 44px; flex: none; }
   .vm-theme-label { display: none; }  /* icon-only control */
+  .vm-lang { flex: none; }
+  .vm-lang-opt { font-size: 11px; padding: 0 10px; min-height: 44px; }
   .vm-nav-toggle { display: inline-flex; flex: none; }
 
   /* Menu panel drops below the bar, full-bleed to the frame edges. */
@@ -1244,6 +1272,10 @@ figure { margin: 0; }
   .vm-entry-title { font-size: 21px; }
   .vm-art-head h2 { font-size: 22px; }
   .vm-drop::first-letter { font-size: 46px; }
+
+  /* The bar now carries four controls; the language pair gives up its padding
+     first so the menu button keeps its 44px tap target. */
+  .vm-lang-opt { padding: 0 7px; }
 
   /* Meter drops below the label rather than crushing a long skill name. */
   .vm-skill { grid-template-columns: minmax(0, 1fr); gap: 6px; }
