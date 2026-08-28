@@ -203,6 +203,11 @@ figure { margin: 0; }
 }
 .vm-theme-btn:hover { background: var(--vm-hover); }
 
+/* The nav's right-hand controls. Grouping them matters on phones, where the bar
+   wraps: as one item they land together and stay right-aligned. The gap repeats
+   the nav's own so desktop spacing is unchanged. */
+.vm-nav-tools { display: inline-flex; align-items: center; gap: 24px; }
+
 /* Language switch: a two-segment control, so the alternative is always visible
    rather than hidden behind a click like a single cycling button. */
 .vm-lang {
@@ -976,15 +981,19 @@ figure { margin: 0; }
 
   /* ── collapsed nav ─────────────────────────────────────────────────── */
   .vm-nav { flex-wrap: wrap; gap: 12px; padding-top: 11px; padding-bottom: 11px; }
+  /* `flex: 1 1 0` rather than an auto margin: the prompt then claims the leftover
+     width and truncates, instead of pushing the controls onto a second row. */
   .vm-prompt {
     font-size: 11.5px;
-    margin-right: auto;
+    flex: 1 1 0;
+    margin-right: 0;
     white-space: nowrap;
     overflow: hidden;
     min-width: 0;
   }
   .vm-prompt-tail { display: none; }  /* phone shows victor@host only */
 
+  .vm-nav-tools { gap: 12px; flex: none; }
   .vm-theme-btn { font-size: 11px; padding: 7px 10px; min-height: 44px; flex: none; }
   .vm-theme-label { display: none; }  /* icon-only control */
   .vm-lang { flex: none; }
@@ -1015,14 +1024,12 @@ figure { margin: 0; }
   /* Back-link leads the bar on the blog and article pages. */
   .vm-back {
     order: -1;
-    margin-right: auto;
     font-size: 11.5px;
     font-family: var(--font-mono);
     display: inline-flex;
     align-items: center;
     min-height: 44px;
   }
-  .vm-back + .vm-prompt, .vm-prompt:has(+ .vm-back) { margin-right: 0; }
   .vm-prompt-head { display: none; }
 
   /* ── hero ──────────────────────────────────────────────────────────── */

@@ -53,9 +53,13 @@
   </div>
   <nav id="nav-links" class="vm-nav-links" aria-label="Sections"
        data-i18n="home.navAria" data-i18n-attr="aria-label"></nav>
-  <div id="lang-toggle" class="vm-lang" role="group" data-i18n="langLabel" data-i18n-attr="aria-label" aria-label="Language"></div>
-  <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
-  <button id="nav-toggle" class="vm-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+  <!-- The controls travel together: when the bar wraps on a phone they stay
+       one right-aligned cluster instead of scattering across two rows. -->
+  <div class="vm-nav-tools">
+    <div id="lang-toggle" class="vm-lang" role="group" data-i18n="langLabel" data-i18n-attr="aria-label" aria-label="Language"></div>
+    <button id="theme-toggle" class="vm-theme-btn" type="button" aria-label="Toggle colour theme"><span class="vm-theme-icon">☾</span><span class="vm-theme-label">night shift</span></button>
+    <button id="nav-toggle" class="vm-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+  </div>
 </header>
 
 <noscript>
